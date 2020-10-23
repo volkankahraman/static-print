@@ -110,6 +110,31 @@ var partJson = {
 };
 var jsonUri = 'data:text/plain;base64,' + window.btoa(JSON.stringify(partJson));
 /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-particlesJS.load('particles-js', jsonUri, function() {
-	console.log('callback - particles.js config loaded');
-});
+window.onload = function() {
+	particlesJS.load('particles-js', jsonUri, function() {
+		console.log('callback - particles.js config loaded');
+	});
+
+	var el = document.querySelector('#dark-mode');
+	var html = document.querySelector('html');
+	var themeBtn = document.querySelector('#theme-button');
+
+	function switchThemeDark() {
+		html.setAttribute('theme', 'dark-mode');
+		themeBtn.classList.remove('fa-moon');
+		themeBtn.classList.add('fa-sun');
+		localStorage.setItem('theme', 'dark-mode');
+	}
+	function switchThemeLight() {
+		html.setAttribute('theme', '');
+		themeBtn.classList.remove('fa-sun');
+		themeBtn.classList.add('fa-moon');
+		localStorage.setItem('theme', '');
+	}
+	if (localStorage.getItem('theme') === 'dark-mode') switchThemeDark();
+	else switchThemeLight();
+	el.onclick = function() {
+		if (html.getAttribute('theme') !== 'dark-mode') switchThemeDark();
+		else switchThemeLight();
+	};
+};

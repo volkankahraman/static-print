@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "static-print"
+  },
+  "targets": {
+    "static-print": {
+      "hosting": {
+        "static-print": [
+          "static-print"
+        ]
+      }
+    }
   }
 }

@@ -122,8 +122,13 @@
               "devServerTarget": "static-print:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "static-print"
 }
