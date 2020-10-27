@@ -1,0 +1,45 @@
+.columns {
+	margin: 0;
+}
+/* #dark-mode{
+  margin-
+} */
+
+.interactive-bg {
+	height: 100vh;
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url(https://images.pexels.com/photos/3201783/pexels-photo-3201783.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+	background-color: #277fbe;
+	box-shadow: inset 24px 4px 64px -24px #474747;
+	padding: 0;
+	background-size: cover;
+	background-position: bottom;
+	background-repeat: no-repeat;
+}
+@media (max-width: 769px) {
+	.interactive-bg {
+		display: none;
+	}
+}
+.input {
+	border-radius: 50px;
+}
+
+.button {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	min-width: 150px;
+}
+
+.login-logo {
+	margin: 0 auto;
+	width: 200px;
+}
+.title {
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+
+.section {
+	padding: 0 1.5rem;
+}

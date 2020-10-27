@@ -110,11 +110,7 @@ var partJson = {
 };
 var jsonUri = 'data:text/plain;base64,' + window.btoa(JSON.stringify(partJson));
 /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-window.onload = function() {
-	particlesJS.load('particles-js', jsonUri, function() {
-		console.log('callback - particles.js config loaded');
-	});
-
+document.addEventListener('DOMContentLoaded', function(event) {
 	var el = document.querySelector('#dark-mode');
 	var html = document.querySelector('html');
 	var themeBtn = document.querySelector('#theme-button');
@@ -137,4 +133,5 @@ window.onload = function() {
 		if (html.getAttribute('theme') !== 'dark-mode') switchThemeDark();
 		else switchThemeLight();
 	};
-};
+	particlesJS.load('particles-js', jsonUri);
+});
