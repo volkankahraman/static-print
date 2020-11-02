@@ -32,10 +32,19 @@
       </span>
     </div>
   </div>
-  <div class="has-text-centered">
-    <a class="button is-vcentered is-info is-outlined" (click)="login()">Giriş Yap</a>
+  <div class="field">
+    <label class="label">Şifre Tekrarı</label>
+    <div class="control has-icons-left">
+      <input class="input" type="password" [(ngModel)]="password" placeholder="Şifre">
+      <span class="icon is-small is-left">
+        <i class="fa fa-key"></i>
+      </span>
+    </div>
   </div>
   <div class="has-text-centered">
-    <a [routerLink]="['/register']"> Hesabınız yok mu? Şimdi üye ol!</a>
+    <a class="button is-vcentered is-info is-outlined" (click)="register()">Üye OL</a>
+  </div>
+  <div class="has-text-centered">
+    <a href="signup.html"> Hesabınız yok mu? Şimdi üye ol!</a>
   </div>
 </section>

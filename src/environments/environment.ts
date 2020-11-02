@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+	production: false,
+	title: 'Static Print',
+	firbase: {
+		apiKey: 'AIzaSyANlrqPlaYtAiVtdNZSiRvyUVDBpbPJk6k',
+		authDomain: 'static-print.firebaseapp.com',
+		databaseURL: 'https://static-print.firebaseio.com',
+		projectId: 'static-print',
+		storageBucket: 'static-print.appspot.com',
+		messagingSenderId: '997015371217',
+		appId: '1:997015371217:web:885d08f3299b791fbe34f0'
+	}
 };
 
 /*

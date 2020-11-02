@@ -127,11 +127,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		themeBtn.classList.add('fa-moon');
 		localStorage.setItem('theme', '');
 	}
-	if (localStorage.getItem('theme') === 'dark-mode') switchThemeDark();
-	else switchThemeLight();
-	el.onclick = function() {
-		if (html.getAttribute('theme') !== 'dark-mode') switchThemeDark();
+	if (themeBtn) {
+		if (localStorage.getItem('theme') === 'dark-mode') switchThemeDark();
 		else switchThemeLight();
-	};
+		el.onclick = function() {
+			if (html.getAttribute('theme') !== 'dark-mode') switchThemeDark();
+			else switchThemeLight();
+		};
+	}
 	particlesJS.load('particles-js', jsonUri);
 });
