@@ -1,8 +1,3 @@
-<div class="block">
-  <span class="icon is-large is-pulled-right " id="dark-mode">
-    <i class="fas fa-moon fa-lg " id="theme-button"></i>
-  </span></div>
-
 <section class="section">
   <div class="has-text-centered">
     <img class="login-logo"
@@ -35,16 +30,16 @@
   <div class="field">
     <label class="label">Şifre Tekrarı</label>
     <div class="control has-icons-left">
-      <input class="input" type="password" [(ngModel)]="password" placeholder="Şifre">
+      <input class="input" type="password" [(ngModel)]="rePassword" placeholder="Şifre Tekrarı">
       <span class="icon is-small is-left">
         <i class="fa fa-key"></i>
       </span>
     </div>
   </div>
   <div class="has-text-centered">
-    <a class="button is-vcentered is-info is-outlined" (click)="register()">Üye OL</a>
+    <a class="button is-vcentered is-info is-outlined" (click)="register()">Üye Ol</a>
   </div>
   <div class="has-text-centered">
-    <a href="signup.html"> Hesabınız yok mu? Şimdi üye ol!</a>
+    <a [routerLink]="['/auth','login']"> Zaten üye misiniz? Giriş Yap!</a>
   </div>
 </section>

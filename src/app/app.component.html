@@ -1,1 +1,3 @@
-<app-auth></app-auth>
+<div [attr.theme]="isDarkMode ? 'dark-mode' : 'light-mode'">
+  <router-outlet></router-outlet>
+</div>

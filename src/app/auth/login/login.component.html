@@ -1,8 +1,3 @@
-<div class="block">
-  <span class="icon is-large is-pulled-right " id="dark-mode">
-    <i class="fas fa-moon fa-lg " id="theme-button"></i>
-  </span></div>
-
 <section class="section">
   <div class="has-text-centered">
     <img class="login-logo"
@@ -36,6 +31,6 @@
     <a class="button is-vcentered is-info is-outlined" (click)="login()">Giriş Yap</a>
   </div>
   <div class="has-text-centered">
-    <a [routerLink]="['/register']"> Hesabınız yok mu? Şimdi üye ol!</a>
+    <a [routerLink]="['/auth','register']"> Hesabınız yok mu? Şimdi üye ol!</a>
   </div>
 </section>

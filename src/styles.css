@@ -1,11 +1,15 @@
-html[theme='dark-mode'] {
+div[theme='dark-mode'] {
+	background: white;
 	filter: invert(1) hue-rotate(180deg);
+}
+div[theme='light-mode'] {
+	background: white;
 }
 
-html[theme='dark-mode'] img {
+div[theme='dark-mode'] img {
 	filter: invert(1) hue-rotate(180deg);
 }
-html[theme='dark-mode'] .interactive-bg {
+div[theme='dark-mode'] .interactive-bg {
 	filter: invert(1) hue-rotate(180deg);
 }
 html {

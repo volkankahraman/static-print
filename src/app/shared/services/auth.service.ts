@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthService {
-	constructor(public auth: AngularFireAuth, private router: Router) {
-		this.auth.onAuthStateChanged((user) => {
-			if (user) {
-				this.router.navigate([ '/dashboard' ]);
-			} else {
-				this.router.navigate([ '/login' ]);
-			}
-		});
+	currUser: Observable<firebase.User>;
+	getUser(): Observable<firebase.User> {
+		return this.auth.authState;
 	}
-	checkIfLogin() {
-		return this.auth.currentUser;
+	constructor(public auth: AngularFireAuth) {}
+	async checkIfLogin() {
+		return await this.auth.currentUser;
 	}
 	loginWithEmail(email: string, password: string) {
 		console.log(email, password);
