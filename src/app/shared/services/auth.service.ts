@@ -20,6 +20,9 @@ export class AuthService {
 
 		this.auth.signInWithEmailAndPassword(email, password).then((res) => console.log(res));
 	}
+	registerAccount(email: string, password: string){
+		this.auth.createUserWithEmailAndPassword(email,password).then((res) => console.log(res));
+	}
 
 	logout() {
 		this.auth.signOut();
