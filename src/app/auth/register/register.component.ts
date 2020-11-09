@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class RegisterComponent implements OnInit {
 	constructor(private auth: AuthService) {}
 	title: string;
+	fullName: string;
+	companyName: string;
 	email: string;
 	password: string;
 	rePassword: string;
@@ -19,7 +21,7 @@ export class RegisterComponent implements OnInit {
 	}
 
 	register() {
-		this.auth.registerAccount(this.email, this.password);
-		// console.log(this.email, this.password, this.rePassword);
+		this.auth.registerAccount(this.email, this.password, this.fullName, this.companyName);
+		// console.log(this.email, this.password, this.rePassword,this.fullName,this.companyName);
 	}
 }

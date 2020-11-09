@@ -130,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "static-print"
+  "defaultProject": "static-print",
+  "cli": {
+    "analytics": false
+  }
 }
