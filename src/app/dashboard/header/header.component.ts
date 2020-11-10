@@ -2,18 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+	selector: 'app-header',
+	templateUrl: './header.component.html',
+	styleUrls: [ './header.component.css' ]
 })
 export class HeaderComponent implements OnInit {
+	isModalActive: string = '';
+	constructor(private auth: AuthService) {}
 
-  constructor(private auth: AuthService) { }
-
-  ngOnInit(): void {
-  }
-  logout() {
-    this.auth.logout();
-  }
-
+	ngOnInit(): void {}
+	logout() {
+		this.auth.logout();
+	}
 }
