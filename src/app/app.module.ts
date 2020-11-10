@@ -8,13 +8,25 @@ import { LoginComponent } from './auth/login/login.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { RouterModule } from '@angular/router';
 import { AuthService } from './shared/services/auth.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HeaderComponent } from './dashboard/header/header.component';
+import { SidebarComponent } from './dashboard/sidebar/sidebar.component';
+import { ContentComponent } from './dashboard/content/content.component';
 
 @NgModule({
-	declarations: [ AppComponent, AuthComponent, LoginComponent, DashboardComponent, RegisterComponent ],
+	declarations: [
+		AppComponent,
+		AuthComponent,
+		LoginComponent,
+		RegisterComponent,
+		DashboardComponent,
+		HeaderComponent,
+		SidebarComponent,
+		ContentComponent
+	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
@@ -22,7 +34,7 @@ import { AuthService } from './shared/services/auth.service';
 		FormsModule,
 		RouterModule
 	],
-	providers: [ AuthService ],
-	bootstrap: [ AppComponent ]
+	providers: [AuthService],
+	bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

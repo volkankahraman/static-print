@@ -1,0 +1,31 @@
+nav.navbar {
+    border-top: 4px solid #276cda;
+    margin-bottom: 1rem;
+}
+
+.navbar-item.brand-text {
+    font-weight: 300;
+}
+
+.navbar-item, .navbar-link {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.addDocument {
+    background-color: darkcyan;
+    color: white !important;
+}
+
+.addDocument:hover {
+    background-color: teal !important;
+}
+
+.addEmployee {
+    background-color: coral;
+    color: white !important;
+}
+
+.addEmployee:hover {
+    background-color: tomato !important;
+}
