@@ -45,9 +45,20 @@
     </header>
     <section class="modal-card-body">
       <div class="field">
+        <label class="label">Çalışanın Adı</label>
+        <div class="control  has-icons-left">
+          <input class="input" type="text" [(ngModel)]="mailName" placeholder="İsim" required>
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+
+        </div>
+
+      </div>
+      <div class="field">
         <label class="label">Email</label>
         <div class="control  has-icons-left">
-          <input class="input" type="email" placeholder="Email" required>
+          <input class="input" type="email" [(ngModel)]="mailAdress" placeholder="Email" required>
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -57,7 +68,7 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" (click)="isModalActive=''" onclick="alert('Davet gönderildi');">Davet
+      <button class="button is-success" (click)="sendMail()" >Davet
         et</button>
       <button class="button" (click)="isModalActive=''">İptal</button>
     </footer>

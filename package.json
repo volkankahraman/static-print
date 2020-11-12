@@ -23,11 +23,12 @@
     "@angular/router": "~10.1.5",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "bulma": "^0.9.1",
+    "emailjs-com": "^2.6.3",
+    "firebase": "^7.13.1",
     "particles.js": "^2.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
-    "firebase": "^7.13.1"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1001.7",
