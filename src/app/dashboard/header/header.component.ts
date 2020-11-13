@@ -13,14 +13,25 @@ export class HeaderComponent implements OnInit {
 	isModalActive: string = '';
 	mailAdress: string = "";
 	mailName: string = "";
+	senderMail: string="";
+	companyName:string= "";
+	
 
+	ngOnInit(): void {
+		this.auth.getManager().then((manager) =>{
+			console.log(manager.email)
 
-	ngOnInit(): void {}
+			this.companyName = manager.company.name;
+		})
+	}
+	
 	sendMail(){
 		var templateParams = {
-			from_name: 'Your Boss',
+			from_name: this.companyName,
 			to_name: this.mailName,
-			to_email: this.mailAdress
+			to_email: this.mailAdress,
+			message: this.companyName + "tarafından gönderilen linke tıklayın google.com"
+
 		};
 		console.log(templateParams)
 		console.log(this.mailAdress)
