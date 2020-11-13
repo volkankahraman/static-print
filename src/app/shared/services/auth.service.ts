@@ -1,47 +1,50 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { DatabaseService } from './database.service';
 import { Manager } from '../models/manager';
 import { Company } from '../models/company';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root'
 })
 export class AuthService {
-  currUser: Observable<firebase.User>;
-  // db:Function;
+	currManager = new Subject<Manager>();
 
-  getUser(): Observable<firebase.User> {
-    return this.auth.authState;
-  }
-  constructor(public auth: AngularFireAuth,private db:DatabaseService ) {}
-  async checkIfLogin() {
-    return await this.auth.currentUser;
-  }
-  loginWithEmail(email: string, password: string) {
-    this.auth
-      .signInWithEmailAndPassword(email, password)
-      .then((res) => console.log(res));
-  }
-  registerAccount(email: string, password: string,fullName: string, companyName: string) {
-    this.auth.createUserWithEmailAndPassword(email, password).then((res) => {
-      if (res.user) {
-        let newManager: Manager = new Manager( 
-          res.user.uid,
-          res.user.email,
-          res.user.email.split('@')[0],
-          fullName,
-          );
-          let newCompany: Company = new Company(companyName);
-          
+	getUser(): Observable<firebase.User> {
+		return this.auth.authState;
+	}
+	constructor(public auth: AngularFireAuth, private db: DatabaseService) {}
 
-        this.db.addManager(newManager,newCompany);
-      }
-    });
-  }
+	async getManager() {
+		let uid: string = (await this.auth.currentUser).uid;
+		return this.db.getManagerData(uid);
+	}
+	loginWithEmail(email: string, password: string) {
+		this.auth.signInWithEmailAndPassword(email, password).then((res) => {
+			if (res.user)
+				this.db.getManagerData(res.user.uid).then((manager) => {
+					this.currManager.next(manager);
+				});
+		});
+	}
+	registerAccount(email: string, password: string, fullName: string, companyName: string) {
+		this.auth.createUserWithEmailAndPassword(email, password).then((res) => {
+			if (res.user) {
+				let newManager: Manager = new Manager(
+					res.user.uid,
+					res.user.email,
+					res.user.email.split('@')[0],
+					fullName
+				);
+				let newCompany: Company = new Company(companyName);
 
-  logout() {
-    this.auth.signOut();
-  }
+				this.db.addManager(newManager, newCompany).then((manager) => this.currManager.next(manager));
+			}
+		});
+	}
+
+	logout() {
+		this.auth.signOut();
+	}
 }

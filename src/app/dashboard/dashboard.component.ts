@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../shared/services/auth.service';
 //import { ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -13,7 +14,11 @@ import { Component, OnInit } from '@angular/core';
 	//encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
-	constructor() {}
+	constructor(private auth: AuthService) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.auth.getManager().then((manager) => {
+			console.log(manager);
+		});
+	}
 }
