@@ -1,7 +1,6 @@
-
-<center>
+<p align="center">
 <img src="https://play-lh.googleusercontent.com/oZmXJ4CkYKdQonquHQekyI-5IpOo3D9ZVUX0pMvMWddX2PmhPAx_STgzZcw5Pa7Hcw" width="250" >
-</center>
+</p>
 
 # Static Print
 
