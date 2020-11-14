@@ -1,27 +1,24 @@
-# StaticPrint
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.6.
+<center>
+<img src="https://play-lh.googleusercontent.com/oZmXJ4CkYKdQonquHQekyI-5IpOo3D9ZVUX0pMvMWddX2PmhPAx_STgzZcw5Pa7Hcw" width="250" >
+</center>
 
-## Development server
+# Static Print
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**Proje İçerik:**
 
-## Code scaffolding
+Bazı belgelerin çıktısı olması ve fiziksel olarak saklanmaktadır. Günümüz şartlarında çalışanların uzaktan çalıştığı, dolayısıyla bu belgelerin çıktılarını fiziksel olarak bulunduramadıkları için uzaktan doküman çıktısına ihtiyaçları olacaktır.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Projemiz SASS(Software as a Service) türünde firmalara çalışanları nerede olursa olsun yazıcıya bağlı olan ana makinaya belge yükleyip çıktı alabilmelerini sağlayan bir panel sunmaktadır. (Projenin detayları henüz belirlenmemiştir. Farklı bir projede düşünülebilir)
 
-## Build
+**Platform:** Web
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+**Proje Üyeleri:**
 
-## Running unit tests
+-   Volkan Kahraman 162804002 (Scrum Master / Architect Designer)
+    
+-   Ardanuc Akar 162804011 (Frontend Developer & Database Designer)
+    
+-   Ulaş Gökçe 172802052 (Junior Full Stack Developer)
+    
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
