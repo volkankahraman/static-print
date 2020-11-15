@@ -8,6 +8,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './auth/register/register.component';
 import { RouterModule } from '@angular/router';
 import { AuthService } from './shared/services/auth.service';
@@ -32,6 +33,7 @@ import { ContentComponent } from './dashboard/content/content.component';
 		AppRoutingModule,
 		AngularFireModule.initializeApp(environment.firbase),
 		FormsModule,
+		ReactiveFormsModule,
 		RouterModule
 	],
 	providers: [AuthService],

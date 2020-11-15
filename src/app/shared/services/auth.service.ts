@@ -24,8 +24,8 @@ export class AuthService {
 		return this.db.getManagerData(uid);
 	}
 
-	loginWithEmail(email: string, password: string) {
-		this.auth.signInWithEmailAndPassword(email, password).then((res) => {
+	loginWithEmail(user) {
+		this.auth.signInWithEmailAndPassword(user.email, user.password).then((res) => {
 			if (res.user)
 				this.db.getManagerData(res.user.uid).then((manager) => {
 					this.currManager.next(manager);
