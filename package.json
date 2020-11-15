@@ -27,6 +27,7 @@
     "firebase": "^7.13.1",
     "particles.js": "^2.0.0",
     "rxjs": "~6.6.0",
+    "sweetalert2": "^10.10.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

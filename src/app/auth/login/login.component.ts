@@ -5,10 +5,11 @@ import { environment } from 'src/environments/environment';
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	styleUrls: [ './login.component.css' ]
+	styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
-	constructor(private auth: AuthService) {}
+	constructor(private auth: AuthService) { }
 	title: string;
 	email: string;
 	password: string;
@@ -19,6 +20,6 @@ export class LoginComponent implements OnInit {
 
 	login() {
 		this.auth.loginWithEmail(this.email, this.password);
-		// console.log(this.email, this.password);
+		//console.log(this.email, this.password);
 	}
 }

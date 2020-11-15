@@ -6,8 +6,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 	selector: 'app-register',
 	templateUrl: './register.component.html'
 })
+
 export class RegisterComponent implements OnInit {
-	constructor(private auth: AuthService) {}
+	constructor(private auth: AuthService) { }
 	title: string;
 	fullName: string;
 	companyName: string;
