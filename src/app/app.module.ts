@@ -10,7 +10,6 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './auth/register/register.component';
-import { RouterModule } from '@angular/router';
 import { AuthService } from './shared/services/auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './dashboard/header/header.component';
@@ -37,10 +36,9 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 		AngularFireModule.initializeApp(environment.firbase),
 		AngularFireFunctionsModule,
 		FormsModule,
-		ReactiveFormsModule,
-		RouterModule
+		ReactiveFormsModule
 	],
-	providers: [ AuthService ],
-	bootstrap: [ AppComponent ]
+	providers: [AuthService],
+	bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

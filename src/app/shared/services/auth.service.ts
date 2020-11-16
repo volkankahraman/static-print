@@ -9,6 +9,7 @@ import { ValidationService } from './validation.service';
 import { error } from '@angular/compiler/src/util';
 import { User } from '../models/user';
 import { stringify } from 'querystring';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,11 +20,13 @@ export class AuthService {
 	getUser(): Observable<firebase.User> {
 		return this.auth.authState;
 	}
+	
 	constructor(
 		public auth: AngularFireAuth,
 		private db: DatabaseService,
 		private notify: NotificationService,
-		private valid: ValidationService
+		private valid: ValidationService,
+		private router: Router
 	) { }
 
 	async getCurrentUser() {
@@ -81,5 +84,6 @@ export class AuthService {
 
 	logout() {
 		this.auth.signOut();
+		this.router.navigate([ '/auth', 'login' ]);
 	}
 }

@@ -6,19 +6,20 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthComponent } from './auth/auth.component';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo([ 'login' ]);
-const redirectLoggedInToDashboard = () => redirectLoggedInTo([ 'dashboard' ]);
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
 
 const routes: Routes = [
 	{
 		path: '',
-		component: AuthComponent,
-		canActivate: [ AngularFireAuthGuard ],
-		data: { authGuardPipe: redirectLoggedInToDashboard }
+		redirectTo: 'auth/login',
+		pathMatch: 'full'
 	},
 	{
 		path: 'auth',
 		component: AuthComponent,
+		canActivate: [AngularFireAuthGuard],
+		data: { authGuardPipe: redirectLoggedInToDashboard },
 		children: [
 			{
 				path: 'login',
@@ -31,20 +32,25 @@ const routes: Routes = [
 				component: RegisterComponent
 				// canActivate: [ AngularFireAuthGuard ]
 				// data: { authGuardPipe: redirectLoggedInToDashboard }
+			},
+			{
+				path: 'register/:companyId/:companyName/:fullName/:email',
+				component: RegisterComponent
+				// canActivate: [ AngularFireAuthGuard ]
+				// data: { authGuardPipe: redirectLoggedInToDashboard }
 			}
 		]
 	},
-
 	{
 		path: 'dashboard',
 		component: DashboardComponent,
-		canActivate: [ AngularFireAuthGuard ],
+		canActivate: [AngularFireAuthGuard],
 		data: { authGuardPipe: redirectUnauthorizedToLogin }
 	}
 ];
 
 @NgModule({
-	imports: [ RouterModule.forRoot(routes) ],
-	exports: [ RouterModule ]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
