@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import { DatabaseService } from 'src/app/shared/services/database.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
+import { Company } from 'src/app/shared/models/company';
 
 @Component({
   selector: 'app-modal',
@@ -16,27 +19,33 @@ export class ModalComponent implements OnInit {
   @Output()
   onClose = new EventEmitter();
 
-  constructor(private notify: NotificationService, private valid: ValidationService) { }
+  constructor(private notify: NotificationService,private db: DatabaseService, private auth: AuthService, private valid: ValidationService) { }
 
   mailAddress: string;
   mailName: string;
-  companyName: string = "";
-
+  nMailName:string;
+  uid:string;
+  cName:string;
   ngOnInit(): void {
-  }
+    
+    	this.auth.getCurrentUser().then((user) => {
+        if (user.manager) {
+        this.uid= user.manager.company.uid;
+        this.cName = user.manager.company.name;
+      }
+      })
+      }
 
   sendMail() {
-    // console.log(this.mailAddress)
-    // console.log(this.mailName)
-
+    this.nMailName = this.mailName.replace(" ","%20");      
     if (this.mailAddress && this.mailName) {
       if (this.valid.checkEmail(this.mailAddress)) {
         if (this.valid.checkFullName(this.mailName)) {
           var templateParams = {
-            from_name: this.companyName,
+            from_name: this.cName,
             to_name: this.mailName,
             to_email: this.mailAddress,
-            message: this.companyName + "tarafından gönderilen linke tıklayın google.com"
+            message:`<a href="https://static-print.web.app/auth/register?companyId=${this.uid}&companyName=${this.cName}&fullName=${this.nMailName}&email=${this.mailAddress}"></a>`
           };
 
           // console.log(templateParams)

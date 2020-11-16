@@ -8,6 +8,7 @@ import { NotificationService } from './notification.service';
 import { ValidationService } from './validation.service';
 import { error } from '@angular/compiler/src/util';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 import { stringify } from 'querystring';
 
 @Injectable({
@@ -23,7 +24,8 @@ export class AuthService {
 		public auth: AngularFireAuth,
 		private db: DatabaseService,
 		private notify: NotificationService,
-		private valid: ValidationService
+		private valid: ValidationService,
+		private router: Router
 	) { }
 
 	async getCurrentUser() {
@@ -76,10 +78,11 @@ export class AuthService {
 					});
 			else this.notify.warning('Ad Soyad Sadece Harflerden Oluşmalıdır.');
 		}
-		else this.notify.warning('Şİfreler Uyuşmamaktadır.');
+		else this.notify.warning('Şifreler Uyuşmamaktadır.');
 	}
 
 	logout() {
 		this.auth.signOut();
+		this.router.navigate([ '/auth', 'login' ]);
 	}
 }

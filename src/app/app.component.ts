@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 			if (this.isUser) {
 				this.router.navigate([ '/dashboard' ]);
 			} else {
-				this.router.navigate([ '/auth', 'login' ]);
+				// this.router.navigate([ '/auth', 'login' ]);
 			}
 		});
 	}

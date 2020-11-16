@@ -78,4 +78,8 @@ export class DatabaseService {
 			}
 		}
 	}
+	// async getEmployee(companyId: string){
+	// 	var employees = (await this.db.collection('users').where("company", "==", companyId).ref.get()).data();
+	// 	return employees;
+	// }
 }
