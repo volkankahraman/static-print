@@ -20,7 +20,12 @@ export class RegisterComponent implements OnInit {
 	}
 
 	register() {
-		this.auth.registerAccount(this.email, this.password, this.fullName, this.companyName, 'MoUXILUULYXmeZL7MzhR');
+		this.auth.registerAccount(
+			this.email,
+			this.password,
+			this.fullName,
+			this.companyName /*,'MoUXILUULYXmeZL7MzhR'*/
+		);
 		// console.log(this.email, this.password, this.rePassword,this.fullName,this.companyName);
 	}
 }

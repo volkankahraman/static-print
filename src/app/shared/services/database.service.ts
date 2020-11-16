@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { auth } from 'firebase';
 import { Company } from '../models/company';
 import { Employee } from '../models/employee';
 import { Manager } from '../models/manager';
@@ -24,7 +25,7 @@ export class DatabaseService {
 			.doc(newManager.uid)
 			.set({ ...newManager.getInstance(), company: newCompany.uid });
 
-		this.cf.httpsCallable('addRole')({ type: 'manager', userId: newManager.uid });
+		await this.cf.httpsCallable('addRole')({ type: 'manager', userId: newManager.uid }).toPromise();
 
 		return newManager;
 	}
@@ -44,7 +45,7 @@ export class DatabaseService {
 			.doc(newEmployee.uid)
 			.set({ ...newEmployee.getInstance(), company: companyInstance.uid });
 
-		this.cf.httpsCallable('addRole')({ type: 'employee', userId: newEmployee.uid });
+		await this.cf.httpsCallable('addRole')({ type: 'employee', userId: newEmployee.uid }).toPromise();
 
 		return newEmployee;
 	}
