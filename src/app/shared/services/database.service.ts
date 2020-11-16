@@ -24,7 +24,7 @@ export class DatabaseService {
 			.doc(newManager.uid)
 			.set({ ...newManager.getInstance(), company: newCompany.uid });
 
-		this.cf.httpsCallable('setRef')({ type: 'manager', userId: newManager.uid });
+		this.cf.httpsCallable('addRole')({ type: 'manager', userId: newManager.uid });
 
 		return newManager;
 	}
@@ -44,7 +44,7 @@ export class DatabaseService {
 			.doc(newEmployee.uid)
 			.set({ ...newEmployee.getInstance(), company: companyInstance.uid });
 
-		this.cf.httpsCallable('setRef')({ type: 'employee', userId: newEmployee.uid });
+		this.cf.httpsCallable('addRole')({ type: 'employee', userId: newEmployee.uid });
 
 		return newEmployee;
 	}
