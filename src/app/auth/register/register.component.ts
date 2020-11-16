@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
 	selector: 'app-register',
@@ -8,21 +9,24 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 
 export class RegisterComponent implements OnInit {
-	constructor(private auth: AuthService) { }
-	title: string;
-	fullName: string;
-	companyName: string;
-	email: string;
-	password: string;
-	rePassword: string;
+	constructor(private auth: AuthService, private fb: FormBuilder) { }
 
+	registerForm = this.fb.group({
+		email: [],
+		fullName: [],
+		companyName: [],
+		password: [],
+		rePassword: []
+	});
+
+	title: string;
 
 	ngOnInit(): void {
 		this.title = environment.title;
 	}
 
 	register() {
-		this.auth.registerAccount(this.email, this.password, this.fullName, this.companyName);
+		this.auth.registerAccount(this.registerForm.value);
 		// console.log(this.email, this.password, this.rePassword,this.fullName,this.companyName);
 	}
 }

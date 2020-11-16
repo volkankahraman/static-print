@@ -6,46 +6,21 @@
 
   </div>
 
-  <!-- <div class="field">
-    <label class="label">Email</label>
-    <div class="control  has-icons-left">
-      <input class="input" type="email" [(ngModel)]="email" placeholder="Email">
-      <span class="icon is-small is-left">
-        <i class="fas fa-envelope"></i>
-      </span>
-
-    </div>
-
-  </div>
-
-  <div class="field">
-    <label class="label">Şifre</label>
-    <div class="control has-icons-left">
-      <input class="input" type="password" [(ngModel)]="password" placeholder="Şifre">
-      <span class="icon is-small is-left">
-        <i class="fa fa-key"></i>
-      </span>
-    </div>
-  </div>
-  <div class="has-text-centered">
-    <a class="button is-vcentered is-info is-outlined" (click)="login()">Giriş Yap</a>
-  </div> -->
-
   <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <label class="label is-large">Email</label>
+    <label class="label">Email</label>
     <div class="field">
       <div class="control has-icons-left has-icons-right">
-        <input formControlName="email" class="input is-large" type="email" placeholder="ornek@ornek.com">
+        <input formControlName="email" class="input" type="email" placeholder="ornek@ornek.com">
         <span class="icon is-medium is-left">
           <i class="fas fa-envelope fa-lg"></i>
         </span>
       </div>
     </div>
 
-    <label class="label is-large">Şifre</label>
+    <label class="label">Şifre</label>
     <div class="field">
       <div class="control has-icons-left has-icons-right">
-        <input formControlName="password" class="input is-large" type="password" placeholder="****">
+        <input formControlName="password" class="input" type="password" placeholder="*****">
         <span class="icon is-medium is-left">
           <i class="fas fa-key fa-lg"></i>
         </span>
@@ -54,15 +29,14 @@
 
     <div class="field is-grouped is-grouped-centered">
       <p class="control">
-        <button class="button is-large is-info is-outlined">
+        <button class="button is-info is-outlined">
           Giriş Yap
         </button>
       </p>
     </div>
   </form>
-  <!-- {{ loginForm.value | json}} -->
 
   <div class="has-text-centered">
-    <a [routerLink]="['/auth','register']" class="is-size-4"> Hesabınız yok mu? Şimdi üye ol!</a>
+    <a [routerLink]="['/auth','register']"> Hesabınız yok mu? Şimdi üye ol!</a>
   </div>
 </section>
