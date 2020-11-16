@@ -19,13 +19,9 @@ export class AppComponent implements OnInit {
 		this.auth.getUser().subscribe((authState) => {
 			this.isUser = !!authState;
 			if (this.isUser) {
-<<<<<<< HEAD
 				this.router.navigate([ '/dashboard' ]);
 			} else {
 				// this.router.navigate([ '/auth', 'login' ]);
-=======
-				this.router.navigate(['/dashboard']);
->>>>>>> master
 			}
 		});
 	}

@@ -21,13 +21,5 @@ export class DashboardComponent implements OnInit {
 	}
 
 	 ngOnInit(): void {
-	// 	let companyId:string;
-	// 	this.auth.getCurrentUser().then((user) => {
-	// 		companyId = user.manager.company.uid;
-	// 	})
-
-		// let employee = this.db.getEmployee(companyId)
-		// console.log("here")
-		// console.log(employee)
 	}
 }

@@ -8,7 +8,6 @@ import { NotificationService } from './notification.service';
 import { ValidationService } from './validation.service';
 import { error } from '@angular/compiler/src/util';
 import { User } from '../models/user';
-import { Router } from '@angular/router';
 import { stringify } from 'querystring';
 import { Router } from '@angular/router';
 
