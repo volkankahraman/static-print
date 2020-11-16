@@ -7,6 +7,7 @@ import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './auth/register/register.component';
@@ -16,6 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './dashboard/header/header.component';
 import { SidebarComponent } from './dashboard/sidebar/sidebar.component';
 import { ContentComponent } from './dashboard/content/content.component';
+import { ModalComponent } from './dashboard/modal/modal.component';
 
 @NgModule({
 	declarations: [
@@ -26,7 +28,8 @@ import { ContentComponent } from './dashboard/content/content.component';
 		DashboardComponent,
 		HeaderComponent,
 		SidebarComponent,
-		ContentComponent
+		ContentComponent,
+		ModalComponent
 	],
 	imports: [
 		BrowserModule,

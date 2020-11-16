@@ -4,73 +4,24 @@
       <a class="navbar-item brand-text" href="../index.html">
         <img src="assets/logo.png" class="image">
       </a>
+
       <div class="navbar-burger burger" data-target="navMenu">
         <span></span>
         <span></span>
         <span></span>
       </div>
     </div>
+
     <div id="navMenu" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="javascript:void(0);">
-          Anasayfa
-        </a>
-        <a class="navbar-item" href="javascript:void(0);">
-          Belgeler
-        </a>
-        <a class="navbar-item addEmployee" (click)="isModalActive='is-active'" href="javascript:void(0);">
-          Personel Davet Et
-        </a>
-        <a class="navbar-item addDocument" href="javascript:void(0);">
-          Döküman Ekle
-        </a>
-        <a (click)="logout()" class="navbar-item" href="javascript:void(0);">
-          Çıkış
-        </a>
-
+        <a class="navbar-item" href="javascript:void(0);">Anasayfa</a>
+        <a class="navbar-item" href="javascript:void(0);">Belgeler</a>
+        <a class="navbar-item addEmployee" (click)="sendInviteEmployee()" href="javascript:void(0);">Personel Davet Et</a>
+        <a class="navbar-item addDocument" href="javascript:void(0);">Döküman Ekle</a>
+        <a (click)="logout()" class="navbar-item" href="javascript:void(0);">Çıkış</a>
       </div>
     </div>
   </div>
 </nav>
 
-
-
-
-<div class="modal  {{isModalActive}}">
-  <div class="modal-background" (click)="isModalActive=''"></div>
-  <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Çalışanı davet et</p>
-      <button class="delete" aria-label="close" (click)="isModalActive=''"></button>
-    </header>
-    <section class="modal-card-body">
-      <div class="field">
-        <label class="label">Çalışanın Adı</label>
-        <div class="control  has-icons-left">
-          <input class="input" type="text" [(ngModel)]="mailName" placeholder="İsim" required>
-          <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-
-        </div>
-
-      </div>
-      <div class="field">
-        <label class="label">Email</label>
-        <div class="control  has-icons-left">
-          <input class="input" type="email" [(ngModel)]="mailAdress" placeholder="Email" required>
-          <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
-          </span>
-
-        </div>
-
-      </div>
-    </section>
-    <footer class="modal-card-foot">
-      <button class="button is-success" (click)="sendMail()" >Davet
-        et</button>
-      <button class="button" (click)="isModalActive=''">İptal</button>
-    </footer>
-  </div>
-</div>
+<app-modal *ngIf="showModal" [showModal]="sentState" (onClose)="sentInviteEmployee($event)"></app-modal>
