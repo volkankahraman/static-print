@@ -1,62 +1,10 @@
 <section class="section">
   <div class="has-text-centered">
-    <img class="login-logo"
-      src="https://play-lh.googleusercontent.com/oZmXJ4CkYKdQonquHQekyI-5IpOo3D9ZVUX0pMvMWddX2PmhPAx_STgzZcw5Pa7Hcw">
+    <img class="login-logo" src="assets/logo.png">
     <h1 class="title">{{title}}</h1>
-
   </div>
 
-  <!-- <div class="field">
-    <label class="label">Email</label>
-    <div class="control  has-icons-left">
-      <input class="input" type="email" [(ngModel)]="email" placeholder="Email">
-      <span class="icon is-small is-left">
-        <i class="fas fa-envelope"></i>
-      </span>
-    </div>
-  </div>
-  <div class="field">
-    <label class="label">Ad Soyad</label>
-    <div class="control  has-icons-left">
-      <input class="input" type="text" [(ngModel)]="fullName" placeholder="Ad Soyad">
-      <span class="icon is-small is-left">
-        <i class="fas fa-user"></i>
-      </span>
-    </div>
-  </div>
-  <div class="field">
-    <label class="label">Şirket</label>
-    <div class="control  has-icons-left">
-      <input class="input" type="text" [(ngModel)]="companyName" placeholder="Şirket">
-      <span class="icon is-small is-left">
-        <i class="fas fa-building"></i>
-      </span>
-    </div>
-  </div>
-
-  <div class="field">
-    <label class="label">Şifre</label>
-    <div class="control has-icons-left">
-      <input class="input" type="password" [(ngModel)]="password" placeholder="Şifre">
-      <span class="icon is-small is-left">
-        <i class="fa fa-key"></i>
-      </span>
-    </div>
-  </div>
-  <div class="field">
-    <label class="label">Şifre Tekrarı</label>
-    <div class="control has-icons-left">
-      <input class="input" type="password" [(ngModel)]="rePassword" placeholder="Şifre Tekrarı">
-      <span class="icon is-small is-left">
-        <i class="fa fa-key"></i>
-      </span>
-    </div>
-  </div>
-  <div class="has-text-centered">
-    <a class="button is-vcentered is-info is-outlined" (click)="register()">Üye Ol</a>
-  </div> -->
-
-  <form [formGroup]="registerForm" (ngSubmit)="register()">
+  <form [formGroup]="registerForm" (ngSubmit)="register()" class="px-6">
     <label class="label">Email</label>
     <div class="field">
       <div class="control has-icons-left has-icons-right">
@@ -115,7 +63,7 @@
       </p>
     </div>
   </form>
-  
+
   <div class="has-text-centered">
     <a [routerLink]="['/auth','login']"> Zaten üye misiniz? Giriş Yap!</a>
   </div>

@@ -1,12 +1,10 @@
-<section class="section">
+<section class="section section-padding-large">
   <div class="has-text-centered">
-    <img class="login-logo"
-      src="https://play-lh.googleusercontent.com/oZmXJ4CkYKdQonquHQekyI-5IpOo3D9ZVUX0pMvMWddX2PmhPAx_STgzZcw5Pa7Hcw">
+    <img class="login-logo" src="assets/logo.png">
     <h1 class="title">{{title}}</h1>
-
   </div>
 
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
+  <form [formGroup]="loginForm" (ngSubmit)="login()" class="px-6">
     <label class="label">Email</label>
     <div class="field">
       <div class="control has-icons-left has-icons-right">

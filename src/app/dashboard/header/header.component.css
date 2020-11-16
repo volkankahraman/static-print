@@ -21,11 +21,19 @@ nav.navbar {
     background-color: teal !important;
 }
 
+.addDocument:focus {
+    background-color: teal !important;
+}
+
 .addEmployee {
     background-color: coral;
     color: white !important;
 }
 
 .addEmployee:hover {
+    background-color: tomato !important;
+}
+
+.addEmployee:focus {
     background-color: tomato !important;
 }
