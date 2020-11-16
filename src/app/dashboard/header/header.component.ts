@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import { DatabaseService } from 'src/app/shared/services/database.service';
 
 @Component({
 	selector: 'app-header',
@@ -10,7 +11,12 @@ import { ValidationService } from 'src/app/shared/services/validation.service';
 	styleUrls: [ './header.component.css' ]
 })
 export class HeaderComponent implements OnInit {
-	constructor(private auth: AuthService, private notify: NotificationService, private valid: ValidationService) {}
+	constructor(
+		private auth: AuthService,
+		private notify: NotificationService,
+		private valid: ValidationService,
+		private db: DatabaseService
+	) {}
 	templateParams: any;
 	isModalActive: string = '';
 	mailAdress: string = '';
@@ -31,6 +37,9 @@ export class HeaderComponent implements OnInit {
 				console.log('admin giriş yaptı');
 			} else if (user.manager) {
 				console.log(user.manager);
+				this.db.getEmployees(user.manager.company.uid, user.manager.uid).then((employees) => {
+					console.log(employees);
+				});
 				console.log('manager giriş yaptı');
 				this.companyName = user.manager.company.name;
 			} else if (user.employee) {
