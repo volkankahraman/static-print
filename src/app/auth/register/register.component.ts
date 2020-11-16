@@ -7,7 +7,6 @@ import { FormBuilder } from '@angular/forms';
 	selector: 'app-register',
 	templateUrl: './register.component.html'
 })
-
 export class RegisterComponent implements OnInit {
 	constructor(private auth: AuthService, private fb: FormBuilder) { }
 

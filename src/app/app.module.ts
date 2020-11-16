@@ -17,6 +17,7 @@ import { HeaderComponent } from './dashboard/header/header.component';
 import { SidebarComponent } from './dashboard/sidebar/sidebar.component';
 import { ContentComponent } from './dashboard/content/content.component';
 import { ModalComponent } from './dashboard/modal/modal.component';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 
 @NgModule({
 	declarations: [
@@ -34,11 +35,12 @@ import { ModalComponent } from './dashboard/modal/modal.component';
 		BrowserModule,
 		AppRoutingModule,
 		AngularFireModule.initializeApp(environment.firbase),
+		AngularFireFunctionsModule,
 		FormsModule,
 		ReactiveFormsModule,
 		RouterModule
 	],
-	providers: [AuthService],
-	bootstrap: [AppComponent]
+	providers: [ AuthService ],
+	bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}

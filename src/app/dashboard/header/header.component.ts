@@ -7,17 +7,16 @@ import { ValidationService } from 'src/app/shared/services/validation.service';
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	styleUrls: ['./header.component.css']
+	styleUrls: [ './header.component.css' ]
 })
-
 export class HeaderComponent implements OnInit {
-	constructor(private auth: AuthService, private notify: NotificationService, private valid: ValidationService) { }
+	constructor(private auth: AuthService, private notify: NotificationService, private valid: ValidationService) {}
 	templateParams: any;
 	isModalActive: string = '';
-	mailAdress: string = "";
-	mailName: string = "";
-	senderMail: string = "";
-	companyName: string = "";
+	mailAdress: string = '';
+	mailName: string = '';
+	senderMail: string = '';
+	companyName: string = '';
 
 	showModal: boolean = false;
 	sendInviteEmployee() {
@@ -26,11 +25,19 @@ export class HeaderComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.auth.getManager().then((manager) => {
-			// console.log(manager.email)
-
-			this.companyName = manager.company.name;
-		})
+		this.auth.getCurrentUser().then((user) => {
+			if (user.isAdmin) {
+				console.log(user.userData);
+				console.log('admin giriş yaptı');
+			} else if (user.manager) {
+				console.log(user.manager);
+				console.log('manager giriş yaptı');
+				this.companyName = user.manager.company.name;
+			} else if (user.employee) {
+				console.log(user.employee);
+				console.log('employee giriş yaptı');
+			}
+		});
 	}
 
 	logout() {
@@ -40,9 +47,7 @@ export class HeaderComponent implements OnInit {
 	sentInviteEmployee(state) {
 		if (state) {
 			this.showModal = !state;
-			this.notify.success("Çalışan Davet Edildi.");
-		}
-		else
-			this.showModal = state;
+			this.notify.success('Çalışan Davet Edildi.');
+		} else this.showModal = state;
 	}
 }
