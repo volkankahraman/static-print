@@ -16,9 +16,5 @@ import { AuthService } from '../shared/services/auth.service';
 export class DashboardComponent implements OnInit {
 	constructor(private auth: AuthService) {}
 
-	ngOnInit(): void {
-		this.auth.getManager().then((manager) => {
-			console.log(manager);
-		});
-	}
+	ngOnInit(): void {}
 }

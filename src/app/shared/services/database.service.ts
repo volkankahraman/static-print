@@ -1,34 +1,80 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { Company } from '../models/company';
+import { Employee } from '../models/employee';
 import { Manager } from '../models/manager';
 import { User } from '../models/user';
-import { AuthService } from './auth.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class DatabaseService {
-	constructor(public db: AngularFirestore) {}
+	constructor(public db: AngularFirestore, public cf: AngularFireFunctions) {}
 
-	async addManager(manager: Manager, company: Company) {
-		let companyInstance = await this.db.collection('companies').add(company.getInstance());
-		company.uid = companyInstance.id;
-		manager.company = company;
-		await this.db.collection('users').doc(manager.uid).set({ ...manager.getInstance(), company: company.uid });
+	async addManager(user: firebase.User, fullName: string, companyName: string) {
+		let newManager: Manager = new Manager(user.uid, user.email, user.email.split('@')[0], fullName);
+		let newCompany: Company = new Company(companyName);
 
-		return manager;
+		let companyInstance = await this.db.collection('companies').add(newCompany.getInstance());
+		newCompany.uid = companyInstance.id;
+		newManager.company = newCompany;
+		await this.db
+			.collection('users')
+			.doc(newManager.uid)
+			.set({ ...newManager.getInstance(), company: newCompany.uid });
+
+		this.cf.httpsCallable('setRef')({ type: 'manager', userId: newManager.uid });
+
+		return newManager;
 	}
 
-	async getManagerData(uid: string) {
-		let managerInstance = (await this.db.collection('users').doc(uid).ref.get()).data();
-		let manager = new Manager(uid, managerInstance.email, managerInstance.username, managerInstance.displayName);
-		let companyInstance = await this.db.collection('companies').doc(managerInstance.company).ref.get();
-		let company = new Company(companyInstance.data().name);
-		company.uid = companyInstance.id;
+	async addEmployee(user: firebase.User, fullName: string, companyId: string) {
+		let newEmployee: Employee = new Employee(user.uid, user.email, user.email.split('@')[0], fullName);
 
-		manager.addCompany(company);
+		let invitedcompany = await this.db.collection('companies').doc(companyId).ref.get();
+		let companyInstance = new Company(invitedcompany.data().name);
 
-		return manager;
+		companyInstance.uid = invitedcompany.id;
+
+		newEmployee.company = companyInstance;
+
+		await this.db
+			.collection('users')
+			.doc(newEmployee.uid)
+			.set({ ...newEmployee.getInstance(), company: companyInstance.uid });
+
+		this.cf.httpsCallable('setRef')({ type: 'employee', userId: newEmployee.uid });
+
+		return newEmployee;
+	}
+
+	async getUserData(uid: string, admin: Boolean) {
+		let userInstance = (await this.db.collection('users').doc(uid).ref.get()).data();
+		if (admin) {
+			let userData = new User(uid, userInstance.email, userInstance.username, userInstance.displayName);
+			return { userData, isAdmin: true };
+		} else {
+			let userType = (await userInstance.role.get()).data();
+			if (userType.type == 'manager') {
+				let manager = new Manager(uid, userInstance.email, userInstance.username, userInstance.displayName);
+				let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
+				let company = new Company(companyInstance.data().name);
+				company.uid = companyInstance.id;
+
+				manager.addCompany(company);
+
+				return { manager, isAdmin: false };
+			} else if (userType.type == 'employee') {
+				let employee = new Employee(uid, userInstance.email, userInstance.username, userInstance.displayName);
+				let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
+				let company = new Company(companyInstance.data().name);
+				company.uid = companyInstance.id;
+
+				employee.addCompany(company);
+
+				return { employee, isAdmin: false };
+			}
+		}
 	}
 }
