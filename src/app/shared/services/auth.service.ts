@@ -10,6 +10,7 @@ import { error } from '@angular/compiler/src/util';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { stringify } from 'querystring';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root'
@@ -20,6 +21,7 @@ export class AuthService {
 	getUser(): Observable<firebase.User> {
 		return this.auth.authState;
 	}
+	
 	constructor(
 		public auth: AngularFireAuth,
 		private db: DatabaseService,
