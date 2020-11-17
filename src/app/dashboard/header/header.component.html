@@ -11,13 +11,19 @@
         <span></span>
       </div>
     </div>
-
     <div id="navMenu" class="navbar-menu">
       <div class="navbar-end">
         <a class="navbar-item" href="javascript:void(0);">Anasayfa</a>
-        <a class="navbar-item" href="javascript:void(0);">Belgeler</a>
-        <a class="navbar-item addEmployee" (click)="sendInviteEmployee()" href="javascript:void(0);">Personel Davet Et</a>
-        <a class="navbar-item addDocument" href="javascript:void(0);">Döküman Ekle</a>
+        <ng-template [ngIf]="showDocuments">
+          <a class="navbar-item" href="javascript:void(0);">Belgeler</a>
+        </ng-template>
+        <ng-template [ngIf]="showAddEmployee">
+          <a class="navbar-item addEmployee" (click)="sendInviteEmployee()" href="javascript:void(0);">Personel Davet
+            Et</a>
+        </ng-template>
+        <ng-template [ngIf]="showAddDocument">
+          <a class="navbar-item addDocument" href="javascript:void(0);">Döküman Ekle</a>
+        </ng-template>
         <a (click)="logout()" class="navbar-item" href="javascript:void(0);">Çıkış</a>
       </div>
     </div>

@@ -20,8 +20,6 @@ export class AppComponent implements OnInit {
 			this.isUser = !!authState;
 			if (this.isUser) {
 				this.router.navigate([ '/dashboard' ]);
-			} else {
-				// this.router.navigate([ '/auth', 'login' ]);
 			}
 		});
 	}

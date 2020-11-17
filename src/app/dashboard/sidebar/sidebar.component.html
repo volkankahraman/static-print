@@ -1,14 +1,27 @@
 <aside class="menu is-hidden-mobile">
-    <p class="menu-label">
-        Yöneticilik İşlemleri
-    </p>
-    <ul class="menu-list">
-        <li><a>Personeller</a></li>
-    </ul>
-    <p class="menu-label">
-        Belge İşlemleri
-    </p>
-    <ul class="menu-list">
-        <li><a>Belgeler</a></li>
-    </ul>
+    <p class="menu-label" class="is-size-4">{{ companyName }}</p>
+    <ng-template [ngIf]="showAdminOperations">
+        <p class="menu-label">
+            Admin İşlemleri
+        </p>
+        <ul class="menu-list">
+            <li><a>Şirketler</a></li>
+        </ul>
+    </ng-template>
+    <ng-template [ngIf]="showManagementOperations">
+        <p class="menu-label">
+            Yöneticilik İşlemleri
+        </p>
+        <ul class="menu-list">
+            <li><a>Personeller</a></li>
+        </ul>
+    </ng-template>
+    <ng-template [ngIf]="showDocumentOperations">
+        <p class="menu-label">
+            Belge İşlemleri
+        </p>
+        <ul class="menu-list">
+            <li><a>Belgeler</a></li>
+        </ul>
+    </ng-template>
 </aside>

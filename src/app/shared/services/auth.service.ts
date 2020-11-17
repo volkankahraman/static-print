@@ -82,8 +82,8 @@ export class AuthService {
 		else this.notify.warning('Şifreler Uyuşmamaktadır.');
 	}
 
-	logout() {
-		this.auth.signOut();
+	async logout() {
+		await this.auth.signOut();
 		this.router.navigate([ '/auth', 'login' ]);
 	}
 }

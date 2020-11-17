@@ -20,17 +20,30 @@ export class RegisterComponent implements OnInit {
 	});
 
 	title: string;
+	companyId: string;
 
 	ngOnInit(): void {
 		this.title = environment.title;
-		let companyId = this.activatedRoute.snapshot.params.companyId;
+		this.companyId = this.activatedRoute.snapshot.params.companyId;
 		let companyName = this.activatedRoute.snapshot.params.companyName;
-		this.registerForm.controls['companyName'].setValue(companyName);
-		this.registerForm.controls['companyName'].disable();
+		let fullName = this.activatedRoute.snapshot.params.fullName;
+		let email = this.activatedRoute.snapshot.params.email;
+		
+		if (this.companyId != undefined) {
+			this.registerForm.controls['companyName'].setValue(companyName);
+			this.registerForm.controls['companyName'].disable();
+			this.registerForm.controls['fullName'].setValue(fullName);
+			this.registerForm.controls['fullName'].disable();
+			this.registerForm.controls['email'].setValue(email);
+			this.registerForm.controls['email'].disable();
+		}
 	}
 
 	register() {
-		this.auth.registerAccount(this.registerForm.value);
+		if (this.companyId != undefined)
+			this.auth.registerAccount(this.registerForm.value, this.companyId);
+		else
+			this.auth.registerAccount(this.registerForm.value);
 		// console.log(this.email, this.password, this.rePassword,this.fullName,this.companyName);
 	}
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { auth } from 'firebase';
+import { Admin } from '../models/admin';
 import { Company } from '../models/company';
 import { Employee } from '../models/employee';
 import { Manager } from '../models/manager';
@@ -11,7 +12,7 @@ import { User } from '../models/user';
 	providedIn: 'root'
 })
 export class DatabaseService {
-	constructor(public db: AngularFirestore, public cf: AngularFireFunctions) {}
+	constructor(public db: AngularFirestore, public cf: AngularFireFunctions) { }
 
 	async addManager(user: firebase.User, fullName: string, companyName: string) {
 		let newManager: Manager = new Manager(user.uid, user.email, user.email.split('@')[0], fullName);
@@ -52,30 +53,34 @@ export class DatabaseService {
 
 	async getUserData(uid: string, admin: Boolean) {
 		let userInstance = (await this.db.collection('users').doc(uid).ref.get()).data();
-		if (admin) {
-			let userData = new User(uid, userInstance.email, userInstance.username, userInstance.displayName);
-			return { userData, isAdmin: true };
-		} else {
-			let userType = (await userInstance.role.get()).data();
-			if (userType.type == 'manager') {
-				let manager = new Manager(uid, userInstance.email, userInstance.username, userInstance.displayName);
-				let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
-				let company = new Company(companyInstance.data().name);
-				company.uid = companyInstance.id;
+		let userType = (await userInstance.role.get()).data();
+		if (userType.type == 'admin') {
+			let admin = new Admin(uid, userInstance.email, userInstance.username, userInstance.displayName);
+			let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
+			let company = new Company(companyInstance.data().name);
+			company.uid = companyInstance.id;
 
-				manager.addCompany(company);
+			admin.addCompany(company);
 
-				return { manager, isAdmin: false };
-			} else if (userType.type == 'employee') {
-				let employee = new Employee(uid, userInstance.email, userInstance.username, userInstance.displayName);
-				let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
-				let company = new Company(companyInstance.data().name);
-				company.uid = companyInstance.id;
+			return { admin, isAdmin: true };
+		} else if (userType.type == 'manager') {
+			let manager = new Manager(uid, userInstance.email, userInstance.username, userInstance.displayName);
+			let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
+			let company = new Company(companyInstance.data().name);
+			company.uid = companyInstance.id;
 
-				employee.addCompany(company);
+			manager.addCompany(company);
 
-				return { employee, isAdmin: false };
-			}
+			return { manager, isAdmin: false };
+		} else if (userType.type == 'employee') {
+			let employee = new Employee(uid, userInstance.email, userInstance.username, userInstance.displayName);
+			let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
+			let company = new Company(companyInstance.data().name);
+			company.uid = companyInstance.id;
+
+			employee.addCompany(company);
+
+			return { employee, isAdmin: false };
 		}
 	}
 
@@ -88,5 +93,14 @@ export class DatabaseService {
 			}
 		});
 		return employeeList;
+	}
+
+	async getCompanies() {
+		let companiesList = [];
+		let employees = (await this.db.collection('companies').ref.get()).docs;
+		employees.forEach((employee) => {
+			companiesList.push(employee.data());
+		});
+		return companiesList;
 	}
 }
