@@ -20,14 +20,14 @@ export class AuthService {
 	getUser(): Observable<firebase.User> {
 		return this.auth.authState;
 	}
-	
+
 	constructor(
 		public auth: AngularFireAuth,
 		private db: DatabaseService,
 		private notify: NotificationService,
 		private valid: ValidationService,
 		private router: Router
-	) { }
+	) {}
 
 	async getCurrentUser() {
 		let authUser = await this.auth.currentUser;
@@ -52,21 +52,33 @@ export class AuthService {
 			});
 	}
 
-	registerAccount(user: { email: string; password: string, rePassword: string, fullName: string, companyName: string }, companyId?: string) {
+	registerAccount(
+		user: { email: string; password: string; rePassword: string; fullName: string; companyName: string },
+		companyId?: string
+	) {
 		if (user.password == user.rePassword) {
 			if (this.valid.checkFullName(user.fullName))
 				this.auth
 					.createUserWithEmailAndPassword(user.email, user.password)
 					.then((res) => {
 						if (res.user) {
-							if (companyId)
+							console.log(companyId);
+
+							if (companyId == undefined) {
+								console.log('if companyID ', companyId);
+
 								this.db.addManager(res.user, user.fullName, user.companyName).then((manager) => {
+									console.log('BURASI MANAGER', manager);
+
 									this.currUser.next(manager);
 								});
-							else
+							} else {
+								console.log('else companyID ', companyId);
+
 								this.db.addEmployee(res.user, user.fullName, companyId).then((employee) => {
 									this.currUser.next(employee);
 								});
+							}
 						}
 					})
 					.catch((error) => {
@@ -75,11 +87,11 @@ export class AuthService {
 						else if (error.code == 'auth/email-already-in-use')
 							this.notify.warning('Email Adresi Başka Bir Şirket Tarafından Kullanılmaktadır.');
 						else if (error.code == 'auth/invalid-email') this.notify.error('Geçerli Email Adresi Giriniz.');
-						else if (error.code == 'auth/weak-password') this.notify.error('Şifre En Az 6 Haneli Olmalıdır.');
+						else if (error.code == 'auth/weak-password')
+							this.notify.error('Şifre En Az 6 Haneli Olmalıdır.');
 					});
 			else this.notify.warning('Ad Soyad Sadece Harflerden Oluşmalıdır.');
-		}
-		else this.notify.warning('Şifreler Uyuşmamaktadır.');
+		} else this.notify.warning('Şifreler Uyuşmamaktadır.');
 	}
 
 	async logout() {

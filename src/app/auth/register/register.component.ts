@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 	templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit {
-	constructor(private auth: AuthService, private fb: FormBuilder, private activatedRoute: ActivatedRoute) { }
+	constructor(private auth: AuthService, private fb: FormBuilder, private activatedRoute: ActivatedRoute) {}
 
 	registerForm = this.fb.group({
 		email: [],
@@ -28,22 +28,23 @@ export class RegisterComponent implements OnInit {
 		let companyName = this.activatedRoute.snapshot.params.companyName;
 		let fullName = this.activatedRoute.snapshot.params.fullName;
 		let email = this.activatedRoute.snapshot.params.email;
-		
+
 		if (this.companyId != undefined) {
 			this.registerForm.controls['companyName'].setValue(companyName);
-			this.registerForm.controls['companyName'].disable();
+			// this.registerForm.controls['companyName'].disable();
 			this.registerForm.controls['fullName'].setValue(fullName);
-			this.registerForm.controls['fullName'].disable();
+			// this.registerForm.controls['fullName'].disable();
 			this.registerForm.controls['email'].setValue(email);
-			this.registerForm.controls['email'].disable();
+			// this.registerForm.controls['email'].disable();
 		}
 	}
 
 	register() {
-		if (this.companyId != undefined)
+		if (this.companyId != undefined) {
 			this.auth.registerAccount(this.registerForm.value, this.companyId);
-		else
+		} else {
 			this.auth.registerAccount(this.registerForm.value);
+		}
 		// console.log(this.email, this.password, this.rePassword,this.fullName,this.companyName);
 	}
 }
