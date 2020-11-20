@@ -5,7 +5,7 @@
             Admin İşlemleri
         </p>
         <ul class="menu-list">
-            <li><a>Şirketler</a></li>
+            <li><a routerLink="/dashboard/companies">Şirketler</a></li>
         </ul>
     </ng-template>
     <ng-template [ngIf]="showManagementOperations">
@@ -13,7 +13,7 @@
             Yöneticilik İşlemleri
         </p>
         <ul class="menu-list">
-            <li><a>Personeller</a></li>
+            <li><a routerLink="/dashboard/employees">Personeller</a></li>
         </ul>
     </ng-template>
     <ng-template [ngIf]="showDocumentOperations">
@@ -21,7 +21,7 @@
             Belge İşlemleri
         </p>
         <ul class="menu-list">
-            <li><a>Belgeler</a></li>
+            <li><a routerLink="/dashboard/documents">Belgeler</a></li>
         </ul>
     </ng-template>
 </aside>

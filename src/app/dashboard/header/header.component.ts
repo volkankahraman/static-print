@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
@@ -11,12 +11,15 @@ import { Router } from '@angular/router';
 })
 
 export class HeaderComponent implements OnInit {
+	@Input() user: any;
+
 	constructor(
 		private auth: AuthService,
 		private notify: NotificationService,
 		private db: DatabaseService,
 		private router: Router
 	) { }
+
 	templateParams: any;
 	isModalActive: string = '';
 	mailAdress: string = '';
@@ -30,7 +33,6 @@ export class HeaderComponent implements OnInit {
 	showModal: boolean = false;
 	sendInviteEmployee() {
 		this.showModal = true;
-		console.log(this.showModal);
 	}
 
 	ngOnInit(): void {

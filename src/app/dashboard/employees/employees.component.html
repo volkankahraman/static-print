@@ -1,0 +1,20 @@
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a routerLink="/dashboard">Anasayfa</a></li>
+    <li class="is-active"><a routerLink="/dashboard/employees">Çalışanlar</a></li>
+  </ul>
+</nav>
+<table class="table is-fullwidth is-hoverable is-striped">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Ad Soyad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees; let i = index">
+      <th>{{ i + 1 }}</th>
+      <td>{{ employee.displayName }}</td>
+    </tr>
+  </tbody>
+</table>

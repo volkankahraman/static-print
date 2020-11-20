@@ -9,7 +9,7 @@ import { Company } from 'src/app/shared/models/company';
 @Component({
 	selector: 'app-modal',
 	templateUrl: './modal.component.html',
-	styleUrls: [ './modal.component.css' ]
+	styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit {
 	@Input() sentState: boolean = false;
@@ -21,7 +21,7 @@ export class ModalComponent implements OnInit {
 		private db: DatabaseService,
 		private auth: AuthService,
 		private valid: ValidationService
-	) {}
+	) { }
 
 	mailAddress: string;
 	mailName: string;
@@ -46,8 +46,8 @@ export class ModalComponent implements OnInit {
 						from_name: this.cName,
 						to_name: this.mailName,
 						to_email: this.mailAddress,
-						message: `<a href="https://static-print.web.app/auth/register/${this.uid}/${this.cName}/${this
-							.nMailName}/${this.mailAddress}"></a>`
+						message: `https://static-print.web.app/auth/register/${this.uid}/${this.cName}/${this
+							.nMailName}/${this.mailAddress}`
 					};
 
 					// console.log(templateParams)

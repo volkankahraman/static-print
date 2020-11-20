@@ -1,46 +1,45 @@
 <nav class="breadcrumb" aria-label="breadcrumbs">
-    <ul>
-        <li><a href="../">{{ role }}</a></li>
-        <li class="is-active"><a href="#" aria-current="page">Anasayfa</a></li>
-    </ul>
+  <ul>
+    <li class="is-active"><a routerLink="/dashboard">Anasayfa</a></li>
+  </ul>
 </nav>
 <section class="hero is-info welcome is-small">
-    <div class="hero-body">
-        <div class="container">
-            <h1 class="title">
-                Hoşgeldin, {{ displayName }}
-            </h1>
-            <h2 class="subtitle">
-                Umarım harika bir gün geçiriyorsundur!
-            </h2>
-        </div>
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Hoşgeldin, {{ displayName }}
+      </h1>
+      <h2 class="subtitle">
+        Umarım harika bir gün geçiriyorsundur!
+      </h2>
     </div>
+  </div>
 </section>
 <section class="info-tiles">
-    <div class="tile is-ancestor has-text-centered">
-        <ng-template [ngIf]="showCompanyCount">
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <p class="title">{{ companyCount }}</p>
-                    <p class="subtitle">Şirket Sayısı</p>
-                </article>
-            </div>
-        </ng-template>
-        <ng-template [ngIf]="showEmployeeCount">
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <p class="title">{{ employeeCount }}</p>
-                    <p class="subtitle">Personel Sayısı</p>
-                </article>
-            </div>
-        </ng-template>
-        <ng-template [ngIf]="showDocumentCount">
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <p class="title">{{ documentCount }}</p>
-                    <p class="subtitle">Belge Sayısı</p>
-                </article>
-            </div>
-        </ng-template>
-    </div>
+  <div class="tile is-ancestor has-text-centered">
+    <ng-template [ngIf]="showCompanyCount">
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <p class="title">{{ companyCount }}</p>
+          <p class="subtitle">Şirket Sayısı</p>
+        </article>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="showEmployeeCount">
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <p class="title">{{ employeeCount }}</p>
+          <p class="subtitle">Personel Sayısı</p>
+        </article>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="showDocumentCount">
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <p class="title">{{ documentCount }}</p>
+          <p class="subtitle">Belge Sayısı</p>
+        </article>
+      </div>
+    </ng-template>
+  </div>
 </section>

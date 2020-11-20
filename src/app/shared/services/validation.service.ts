@@ -12,7 +12,7 @@ export class ValidationService {
     }
 
     checkFullName(fullName) {
-        if (/^[a-zA-Z ]+$/.test(fullName))
+        if (/^[a-zA-ZığüşöçĞÜŞÖÇİ ]+$/.test(fullName))
             return true;
         return (false)
     }

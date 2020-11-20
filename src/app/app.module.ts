@@ -17,6 +17,9 @@ import { SidebarComponent } from './dashboard/sidebar/sidebar.component';
 import { ContentComponent } from './dashboard/content/content.component';
 import { ModalComponent } from './dashboard/modal/modal.component';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import { CompaniesComponent } from './dashboard/companies/companies.component';
+import { DocumentsComponent } from './dashboard/documents/documents.component';
+import { EmployeesComponent } from './dashboard/employees/employees.component';
 
 @NgModule({
 	declarations: [
@@ -28,7 +31,10 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 		HeaderComponent,
 		SidebarComponent,
 		ContentComponent,
-		ModalComponent
+		ModalComponent,
+		CompaniesComponent,
+		DocumentsComponent,
+		EmployeesComponent
 	],
 	imports: [
 		BrowserModule,

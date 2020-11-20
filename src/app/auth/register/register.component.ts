@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-register',
 	templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit {
-	constructor(private auth: AuthService, private fb: FormBuilder, private activatedRoute: ActivatedRoute) {}
+	constructor(private auth: AuthService, private fb: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router) { }
 
 	registerForm = this.fb.group({
 		email: [],
@@ -31,20 +31,29 @@ export class RegisterComponent implements OnInit {
 
 		if (this.companyId != undefined) {
 			this.registerForm.controls['companyName'].setValue(companyName);
-			// this.registerForm.controls['companyName'].disable();
+			this.registerForm.controls['companyName'].disable();
 			this.registerForm.controls['fullName'].setValue(fullName);
-			// this.registerForm.controls['fullName'].disable();
+			this.registerForm.controls['fullName'].disable();
 			this.registerForm.controls['email'].setValue(email);
-			// this.registerForm.controls['email'].disable();
+			this.registerForm.controls['email'].disable();
 		}
 	}
 
 	register() {
 		if (this.companyId != undefined) {
-			this.auth.registerAccount(this.registerForm.value, this.companyId);
+			this.auth.registerAccount(this.registerForm.getRawValue(), this.companyId);
 		} else {
-			this.auth.registerAccount(this.registerForm.value);
+			this.auth.registerAccount(this.registerForm.getRawValue());
 		}
+		setInterval(function () {
+			let isUser;
+			this.auth.getUser().subscribe((authState) => {
+				isUser = !!authState;
+				if (isUser) {
+					this.router.navigate(['/dashboard']);
+				}
+			});
+		}, 5000)
 		// console.log(this.email, this.password, this.rePassword,this.fullName,this.companyName);
 	}
 }

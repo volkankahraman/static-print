@@ -1,0 +1,22 @@
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a routerLink="/dashboard">Anasayfa</a></li>
+    <li class="is-active"><a routerLink="/dashboard/companies">Şirketler</a></li>
+  </ul>
+</nav>
+<table class="table is-fullwidth is-hoverable is-striped">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Şirket Adı</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let company of companies; let i = index">
+      <tr *ngIf="company.name != 'Static Print'">
+        <th>{{ i + 1 }}</th>
+        <td>{{ company.name }}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

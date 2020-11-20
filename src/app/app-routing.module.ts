@@ -5,6 +5,10 @@ import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthComponent } from './auth/auth.component';
+import { EmployeesComponent } from './dashboard/employees/employees.component';
+import { DocumentsComponent } from './dashboard/documents/documents.component';
+import { CompaniesComponent } from './dashboard/companies/companies.component';
+import { ContentComponent } from './dashboard/content/content.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
@@ -45,7 +49,33 @@ const routes: Routes = [
 		path: 'dashboard',
 		component: DashboardComponent,
 		canActivate: [AngularFireAuthGuard],
-		data: { authGuardPipe: redirectUnauthorizedToLogin }
+		data: { authGuardPipe: redirectUnauthorizedToLogin },
+		children: [
+			{
+				path: '',
+				component: ContentComponent
+				// canActivate: [ AngularFireAuthGuard ]
+				// data: { authGuardPipe: redirectLoggedInToDashboard }
+			},
+			{
+				path: 'employees',
+				component: EmployeesComponent
+				// canActivate: [ AngularFireAuthGuard ]
+				// data: { authGuardPipe: redirectLoggedInToDashboard }
+			},
+			{
+				path: 'documents',
+				component: DocumentsComponent
+				// canActivate: [ AngularFireAuthGuard ]
+				// data: { authGuardPipe: redirectLoggedInToDashboard }
+			},
+			{
+				path: 'companies',
+				component: CompaniesComponent
+				// canActivate: [ AngularFireAuthGuard ]
+				// data: { authGuardPipe: redirectLoggedInToDashboard }
+			}
+		]
 	}
 ];
 
