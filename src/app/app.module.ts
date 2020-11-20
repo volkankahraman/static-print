@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -41,10 +42,11 @@ import { EmployeesComponent } from './dashboard/employees/employees.component';
 		AppRoutingModule,
 		AngularFireModule.initializeApp(environment.firbase),
 		AngularFireFunctionsModule,
+		AngularFireStorageModule,
 		FormsModule,
 		ReactiveFormsModule
 	],
-	providers: [AuthService],
-	bootstrap: [AppComponent]
+	providers: [ AuthService ],
+	bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}
