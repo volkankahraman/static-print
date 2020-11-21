@@ -10,7 +10,7 @@ import { DocumentsComponent } from './dashboard/documents/documents.component';
 import { CompaniesComponent } from './dashboard/companies/companies.component';
 import { ContentComponent } from './dashboard/content/content.component';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
 
 const routes: Routes = [
