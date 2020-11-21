@@ -53,7 +53,7 @@ export class DatabaseService {
 		return newEmployee;
 	}
 
-	async getUserData(uid: string) {
+	async getUserData(uid: string, admin: Boolean) {
 		let userInstance = (await this.db.collection('users').doc(uid).ref.get()).data();
 		let userType = (await userInstance.role.get()).data();
 		if (userType.type == 'admin') {

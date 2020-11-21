@@ -9,7 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 	templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit {
-	constructor(private auth: AuthService, private fb: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router) { }
+	constructor(
+		private auth: AuthService,
+		private fb: FormBuilder,
+		private activatedRoute: ActivatedRoute,
+		private router: Router
+	) {}
 
 	registerForm = this.fb.group({
 		email: [],
@@ -39,21 +44,19 @@ export class RegisterComponent implements OnInit {
 		}
 	}
 
-	register() {
+	async register() {
 		if (this.companyId != undefined) {
-			this.auth.registerAccount(this.registerForm.getRawValue(), this.companyId);
+			await this.auth.registerAccount(this.registerForm.getRawValue(), this.companyId);
 		} else {
-			this.auth.registerAccount(this.registerForm.getRawValue());
+			await this.auth.registerAccount(this.registerForm.getRawValue());
 		}
-		setInterval(function () {
-			let isUser;
-			this.auth.getUser().subscribe((authState) => {
-				isUser = !!authState;
-				if (isUser) {
-					this.router.navigate(['/dashboard']);
-				}
-			});
-		}, 5000)
-		// console.log(this.email, this.password, this.rePassword,this.fullName,this.companyName);
+
+		let isUser: boolean;
+		this.auth.currUser.subscribe((authState) => {
+			isUser = !!authState;
+			if (isUser) {
+				this.router.navigate([ '/dashboard' ]);
+			}
+		});
 	}
 }

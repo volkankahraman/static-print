@@ -10,6 +10,7 @@ import { error } from '@angular/compiler/src/util';
 import { User } from '../models/user';
 import { stringify } from 'querystring';
 import { Router } from '@angular/router';
+import { async } from '@angular/core/testing';
 
 @Injectable({
 	providedIn: 'root'
@@ -52,7 +53,7 @@ export class AuthService {
 			});
 	}
 
-	registerAccount(
+	async registerAccount(
 		user: { email: string; password: string; rePassword: string; fullName: string; companyName: string },
 		companyId?: string
 	) {
@@ -60,7 +61,7 @@ export class AuthService {
 			if (this.valid.checkFullName(user.fullName))
 				this.auth
 					.createUserWithEmailAndPassword(user.email, user.password)
-					.then((res) => {
+					.then(async (res) => {
 						if (res.user) {
 							console.log(companyId);
 
@@ -75,7 +76,7 @@ export class AuthService {
 							} else {
 								console.log('else companyID ', companyId);
 
-								this.db.addEmployee(res.user, user.fullName, companyId).then((employee) => {
+								await this.db.addEmployee(res.user, user.fullName, companyId).then((employee) => {
 									this.currUser.next(employee);
 								});
 							}
