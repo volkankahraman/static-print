@@ -7,9 +7,8 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	styleUrls: ['./header.component.css']
+	styleUrls: [ './header.component.css' ]
 })
-
 export class HeaderComponent implements OnInit {
 	@Input() user: any;
 
@@ -18,7 +17,7 @@ export class HeaderComponent implements OnInit {
 		private notify: NotificationService,
 		private db: DatabaseService,
 		private router: Router
-	) { }
+	) {}
 
 	templateParams: any;
 	isModalActive: string = '';

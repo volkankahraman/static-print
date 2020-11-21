@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { auth } from 'firebase';
+
 import { Admin } from '../models/admin';
 import { Company } from '../models/company';
 import { Employee } from '../models/employee';
 import { Manager } from '../models/manager';
+import { Upload } from '../models/upload';
 import { User } from '../models/user';
+import { StorageService } from './storage.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class DatabaseService {
-	constructor(public db: AngularFirestore, public cf: AngularFireFunctions) { }
+	constructor(public db: AngularFirestore, public cf: AngularFireFunctions, private st: StorageService) {}
 
 	async addManager(user: firebase.User, fullName: string, companyName: string) {
 		let newManager: Manager = new Manager(user.uid, user.email, user.email.split('@')[0], fullName);
@@ -51,7 +53,7 @@ export class DatabaseService {
 		return newEmployee;
 	}
 
-	async getUserData(uid: string, admin: Boolean) {
+	async getUserData(uid: string) {
 		let userInstance = (await this.db.collection('users').doc(uid).ref.get()).data();
 		let userType = (await userInstance.role.get()).data();
 		if (userType.type == 'admin') {
@@ -84,6 +86,38 @@ export class DatabaseService {
 		}
 	}
 
+	async addDocument(document: Upload, user: { employee?: Employee; manager?: Manager }) {
+		let userId: string, companyId: string, url: string;
+
+		if (user.employee) {
+			userId = user.employee.uid;
+			companyId = user.employee.company.uid;
+			url = user.employee.company.name + '/' + document.name;
+		} else if (user.manager) {
+			userId = user.manager.uid;
+			companyId = user.manager.company.uid;
+			url = user.manager.company.name + '/' + document.name;
+		}
+
+		return this.st.uploadFile(document, url).then(async (res) => {
+			let downloadUrl = await res.ref.getDownloadURL();
+
+			return this.db
+				.collection('documents')
+				.add({
+					...document.getInstance(),
+					downloadUrl,
+					userId,
+					companyId,
+					url
+				})
+				.then((res) => {
+					return res.get();
+				})
+				.catch((e) => console.error(e));
+		});
+	}
+
 	async getEmployees(companyId: string, managerId: string) {
 		let employeeList = [];
 		let employees = (await this.db.collection('users').ref.get()).docs;
@@ -102,5 +136,22 @@ export class DatabaseService {
 			companiesList.push(employee.data());
 		});
 		return companiesList;
+	}
+	async getCompanyDocs(companyId: string) {
+		let companyDocList = [];
+		let docs = (await this.db.collection('documents').ref.get()).docs;
+		docs.forEach((doc) => {
+			if (doc.data().companyId == companyId) companyDocList.push(doc.data());
+		});
+		return companyDocList;
+	}
+
+	async getUserDocs(userId: string) {
+		let userDocList = [];
+		let docs = (await this.db.collection('documents').ref.get()).docs;
+		docs.forEach((doc) => {
+			if (doc.data().userId == userId) userDocList.push(doc.data());
+		});
+		return userDocList;
 	}
 }

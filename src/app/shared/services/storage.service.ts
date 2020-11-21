@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Upload } from '../models/upload';
 
 @Injectable({
 	providedIn: 'root'
@@ -7,9 +8,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
 export class StorageService {
 	constructor(private storage: AngularFireStorage) {}
 
-	uploadFile(event) {
-		const file = event.target.files[0];
-		const filePath = '/documents';
+	uploadFile(document: Upload, filePath: string) {
+		const file = document.file;
 		const task = this.storage.upload(filePath, file);
 
 		return task;

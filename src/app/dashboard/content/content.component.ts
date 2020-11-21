@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { async } from '@angular/core/testing';
+import { Upload } from 'src/app/shared/models/upload';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Component({
 	selector: 'app-content',
 	templateUrl: './content.component.html',
-	styleUrls: ['./content.component.css']
+	styleUrls: [ './content.component.css' ]
 })
-
 export class ContentComponent implements OnInit {
 	employeeCount: Number = 0;
 	showEmployeeCount: boolean = false;
@@ -19,9 +21,9 @@ export class ContentComponent implements OnInit {
 	showDocumentCount: boolean = false;
 
 	role: string = '';
-	displayName: string = "";
+	displayName: string = '';
 
-	constructor(private auth: AuthService, private db: DatabaseService) { }
+	constructor(private auth: AuthService, private db: DatabaseService) {}
 
 	ngOnInit(): void {
 		let companyId: string;
@@ -31,26 +33,38 @@ export class ContentComponent implements OnInit {
 				companyId = user.admin.company.uid;
 				managerId = user.admin.uid;
 				this.showCompanyCount = true;
-				this.role = "Admin";
+				this.role = 'Admin';
 				this.displayName = user.admin.displayName;
 				this.db.getCompanies().then((companies) => {
 					this.companyCount = companies.length - 1;
-				})
+				});
 			} else if (user.manager) {
 				companyId = user.manager.company.uid;
 				managerId = user.manager.uid;
 				this.showEmployeeCount = true;
 				this.showDocumentCount = true;
-				this.role = "Yönetici";
+				this.role = 'Yönetici';
 				this.displayName = user.manager.displayName;
 				this.db.getEmployees(companyId, managerId).then((employees) => {
 					this.employeeCount = employees.length;
-				})
+				});
 			} else if (user.employee) {
 				this.showDocumentCount = true;
-				this.role = "Çalışan";
+				this.role = 'Çalışan';
 				this.displayName = user.employee.displayName;
 			}
-		})
+		});
+	}
+
+	async handleFileInput(file: File) {
+		let user = await this.auth.getCurrentUser();
+		let upload: Upload = new Upload(file);
+
+		this.db
+			.addDocument(upload, user)
+			.then(async (res) => {
+				console.log(res.data());
+			})
+			.catch((e) => console.error(e));
 	}
 }

@@ -42,4 +42,8 @@
       </div>
     </ng-template>
   </div>
+  <div>
+    <input type="file" name="file" accept=".pdf" (change)="handleFileInput($event.target.files[0])">
+
+  </div>
 </section>
