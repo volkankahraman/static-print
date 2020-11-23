@@ -1,5 +1,6 @@
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { Injectable } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
@@ -15,7 +16,7 @@ import { StorageService } from './storage.service';
 	providedIn: 'root'
 })
 export class DatabaseService {
-	constructor(public db: AngularFirestore, public cf: AngularFireFunctions, private st: StorageService) { }
+	constructor(public db: AngularFirestore, public cf: AngularFireFunctions, private st: StorageService) {}
 
 	async addManager(user: firebase.User, fullName: string, companyName: string) {
 		let newManager: Manager = new Manager(user.uid, user.email, user.email.split('@')[0], fullName);
@@ -142,8 +143,15 @@ export class DatabaseService {
 	async getCompanyDocs(companyId: string) {
 		let companyDocList = [];
 		let docs = (await this.db.collection('documents').ref.get()).docs;
-		docs.forEach((doc) => {
-			if (doc.data().companyId == companyId) companyDocList.push(doc.data());
+		docs.forEach(async (doc) => {
+			let docData = doc.data();
+			if (docData.companyId == companyId) {
+				let docUser = await this.db.collection('users').doc(docData.userId).ref.get();
+				companyDocList.push({
+					...doc.data(),
+					user: docUser.data()
+				});
+			}
 		});
 		return companyDocList;
 	}
@@ -151,9 +159,16 @@ export class DatabaseService {
 	async getUserDocs(userId: string) {
 		let userDocList = [];
 		let docs = (await this.db.collection('documents').ref.get()).docs;
-		let displayName;
-		docs.forEach((doc) => {
-			if (doc.data().userId == userId) userDocList.push(doc.data());
+		docs.forEach(async (doc) => {
+			if (doc.data().userId == userId) {
+				let docData = doc.data();
+
+				let docUser = await this.db.collection('users').doc(docData.userId).ref.get();
+				userDocList.push({
+					...doc.data(),
+					user: docUser.data()
+				});
+			}
 		});
 		return userDocList;
 	}
