@@ -39,6 +39,7 @@ export class ModalComponent implements OnInit {
 
 	sendMail() {
 		this.nMailName = this.mailName.replace(' ', '%20');
+		this.cName = this.cName.replace(' ', '%20');
 		if (this.mailAddress && this.mailName) {
 			if (this.valid.checkEmail(this.mailAddress)) {
 				if (this.valid.checkFullName(this.mailName)) {
@@ -49,9 +50,6 @@ export class ModalComponent implements OnInit {
 						message: `https://static-print.web.app/auth/register/${this.uid}/${this.cName}/${this
 							.nMailName}/${this.mailAddress}`
 					};
-
-					// console.log(templateParams)
-
 					emailjs
 						.send('service_plbvjsa', 'template_wb9aoxv', templateParams, 'user_ap9e5pxx5z5g6LVeEWBC5')
 						.then((result: EmailJSResponseStatus) => {

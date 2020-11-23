@@ -11,23 +11,10 @@ nav.navbar {
     font-size: 14px;
     font-weight: 700;
 }
-
-.addDocument {
-    background-color: darkcyan;
-    color: white !important;
-}
-
-.addDocument:hover {
-    background-color: teal !important;
-}
-
-.addDocument:focus {
-    background-color: teal !important;
-}
-
 .addEmployee {
     background-color: coral;
     color: white !important;
+    border-radius: 4px;
 }
 
 .addEmployee:hover {
@@ -36,4 +23,7 @@ nav.navbar {
 
 .addEmployee:focus {
     background-color: tomato !important;
+}
+.file.is-success .file-cta:hover{
+    background-color: #218838 !important;
 }

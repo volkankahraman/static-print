@@ -56,15 +56,5 @@ export class ContentComponent implements OnInit {
 		});
 	}
 
-	async handleFileInput(file: File) {
-		let user = await this.auth.getCurrentUser();
-		let upload: Upload = new Upload(file);
 
-		this.db
-			.addDocument(upload, user)
-			.then(async (res) => {
-				console.log(res.data());
-			})
-			.catch((e) => console.error(e));
-	}
 }

@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { Router } from '@angular/router';
+import { Upload } from 'src/app/shared/models/upload';
 
 @Component({
 	selector: 'app-header',
@@ -57,5 +58,21 @@ export class HeaderComponent implements OnInit {
 			this.showModal = !state;
 			this.notify.success('Çalışan Davet Edildi.');
 		} else this.showModal = state;
+	}
+	async handleFileInput(file: File) {
+		let user = await this.auth.getCurrentUser();
+		let upload: Upload = new Upload(file);
+
+		this.db
+			.addDocument(upload, user)
+			.then(async (res) => {
+				console.log(res.data());
+				this.notify.success('Belge Başarıyla Kaydedildi.');
+			})
+			.catch((e) => {
+				console.error(e)
+			this.notify.error("Belge Yüklenemedi.")	
+			}
+				);
 	}
 }
