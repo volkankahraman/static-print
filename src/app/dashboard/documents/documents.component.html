@@ -4,3 +4,19 @@
     <li class="is-active"><a routerLink="/dashboard/documents">Dökümanlar</a></li>
   </ul>
 </nav>
+<table class="table is-fullwidth is-hoverable is-striped">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Belge Adı</th>
+      <!-- <th>Belgeyi Yükleyen</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let document of documents; let i = index">
+      <th>{{ i + 1 }}</th>
+      <td><a href='{{ document.downloadUrl }}' target="_blank">{{ document.name }}</a></td>
+      <!-- <td>{{ document.user }}</td> -->
+    </tr>
+  </tbody>
+</table>
