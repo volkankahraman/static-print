@@ -16,7 +16,7 @@ import { StorageService } from './storage.service';
 	providedIn: 'root'
 })
 export class DatabaseService {
-	constructor(public db: AngularFirestore, public cf: AngularFireFunctions, private st: StorageService) { }
+	constructor(public db: AngularFirestore, public cf: AngularFireFunctions, private st: StorageService) {}
 
 	async addManager(user: firebase.User, fullName: string, companyName: string) {
 		let newManager: Manager = new Manager(user.uid, user.email, user.email.split('@')[0], fullName);
@@ -143,28 +143,7 @@ export class DatabaseService {
 	async getCompanyDocs(companyId: string) {
 		let companyDocList = [];
 		let docs = (await this.db.collection('documents').ref.get()).docs;
-		docs.forEach(async (doc) => {
-			let docData = doc.data();
-			if (docData.companyId == companyId) companyDocList.push(doc.data());
-		});
-		console.log(companyDocList.length);
-
-		return companyDocList;
-	}
-
-	async getUserDocs(userId: string) {
-		let userDocList = [];
-		let docs = (await this.db.collection('documents').ref.get()).docs;
-		docs.forEach(async (doc) => {
-			if (doc.data().userId == userId) userDocList.push(doc.data());
-		});
-		return userDocList;
-	}
-
-	async getCompanyDocsWithUser(companyId: string) {
-		let companyDocList = [];
-		let docs = (await this.db.collection('documents').ref.get()).docs;
-		docs.forEach(async (doc) => {
+		for (const doc of docs) {
 			let docData = doc.data();
 			if (docData.companyId == companyId) {
 				let docUser = await this.db.collection('users').doc(docData.userId).ref.get();
@@ -173,15 +152,14 @@ export class DatabaseService {
 					user: docUser.data()
 				});
 			}
-		});
-		
+		}
 		return companyDocList;
 	}
 
-	async getUserDocsWithUser(userId: string) {
+	async getUserDocs(userId: string) {
 		let userDocList = [];
 		let docs = (await this.db.collection('documents').ref.get()).docs;
-		docs.forEach(async (doc) => {
+		for (const doc of docs) {
 			if (doc.data().userId == userId) {
 				let docData = doc.data();
 
@@ -191,8 +169,8 @@ export class DatabaseService {
 					user: docUser.data()
 				});
 			}
-		});
+		}
+
 		return userDocList;
 	}
-
 }

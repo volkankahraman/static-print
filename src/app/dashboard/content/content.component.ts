@@ -8,7 +8,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 @Component({
 	selector: 'app-content',
 	templateUrl: './content.component.html',
-	styleUrls: ['./content.component.css']
+	styleUrls: [ './content.component.css' ]
 })
 export class ContentComponent implements OnInit {
 	employeeCount: Number = 0;
@@ -23,7 +23,7 @@ export class ContentComponent implements OnInit {
 	role: string = '';
 	displayName: string = '';
 
-	constructor(private auth: AuthService, private db: DatabaseService) { }
+	constructor(private auth: AuthService, private db: DatabaseService) {}
 
 	ngOnInit(): void {
 		let companyId: string;
@@ -50,18 +50,15 @@ export class ContentComponent implements OnInit {
 				});
 				this.db.getCompanyDocs(companyId).then((documents) => {
 					this.documentCount = documents.length;
-					console.log(documents);
 				});
 			} else if (user.employee) {
 				this.showDocumentCount = true;
 				this.role = 'Çalışan';
 				this.displayName = user.employee.displayName;
-				this.db.getUserDocs(user.employee.uid).then((documents) => {
+				this.db.getUserDocs(user.employee.uid).then(async (documents) => {
 					this.documentCount = documents.length;
 				});
 			}
 		});
 	}
-
-
 }
