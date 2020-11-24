@@ -50,6 +50,7 @@ export class ContentComponent implements OnInit {
 				});
 				this.db.getCompanyDocs(companyId).then((documents) => {
 					this.documentCount = documents.length;
+					console.log(documents);
 				});
 			} else if (user.employee) {
 				this.showDocumentCount = true;

@@ -19,7 +19,7 @@ export class DocumentsComponent implements OnInit {
       if (user.manager) {
         let companyId: string = user.manager.company.uid;
 
-        this.db.getCompanyDocs(companyId).then((documents) => {
+        this.db.getCompanyDocsWithUser(companyId).then((documents) => {
           this.documents = documents;
           console.log(documents);
         });
@@ -27,7 +27,7 @@ export class DocumentsComponent implements OnInit {
       else if (user.employee) {
         let userId: string = user.employee.uid;
 
-        this.db.getUserDocs(userId).then((documents) => {
+        this.db.getUserDocsWithUser(userId).then((documents) => {
           this.documents = documents;
           console.log(documents);
         });
