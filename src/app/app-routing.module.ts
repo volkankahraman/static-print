@@ -9,6 +9,7 @@ import { EmployeesComponent } from './dashboard/employees/employees.component';
 import { DocumentsComponent } from './dashboard/documents/documents.component';
 import { CompaniesComponent } from './dashboard/companies/companies.component';
 import { ContentComponent } from './dashboard/content/content.component';
+import { PrinterAccountComponent } from './dashboard/printer-account/printer-account.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
@@ -72,6 +73,12 @@ const routes: Routes = [
 			{
 				path: 'companies',
 				component: CompaniesComponent
+				// canActivate: [ AngularFireAuthGuard ]
+				// data: { authGuardPipe: redirectLoggedInToDashboard }
+			},
+			{
+				path: 'printer-account',
+				component: PrinterAccountComponent
 				// canActivate: [ AngularFireAuthGuard ]
 				// data: { authGuardPipe: redirectLoggedInToDashboard }
 			}

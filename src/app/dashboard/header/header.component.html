@@ -2,7 +2,7 @@
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item brand-text" routerLink="/dashboard">
-        <img src="assets/logo.png" class="image">
+        <img src="assets/logo.png" class="image" />
       </a>
       <div class="navbar-burger burger" data-target="navMenu">
         <span></span>
@@ -11,7 +11,6 @@
       </div>
     </div>
     <div id="navMenu" class="navbar-menu">
-
       <div class="navbar-end">
         <a class="navbar-item" routerLink="/dashboard">Anasayfa</a>
         <ng-template [ngIf]="showDocuments">
@@ -19,39 +18,22 @@
         </ng-template>
         <ng-template [ngIf]="showAddEmployee">
           <div class="navbar-item file">
-            <a
-              class="navbar-item addEmployee"
-              (click)="sendInviteEmployee()"
-              href="javascript:void(0);"
-              >Personel Davet Et</a
-            >
+            <a class="navbar-item addEmployee" (click)="sendInviteEmployee()" href="javascript:void(0);">Personel Davet
+              Et</a>
           </div>
         </ng-template>
         <ng-template [ngIf]="showAddDocument">
           <div class="navbar-item file is-success">
+            <a class="navbar-item addEmployee" (click)="sendInviteEmployee()" href="javascript:void(0);">Döküman
+              Ekle</a>
             <label class="file-label">
-              <input
-                class="file-input"
-                type="file"
-                accept=".pdf"
-                name="resume"
-                (change)="handleFileInput($event.target.files[0])"
-              />
+              <input class="file-input" type="file" accept=".pdf" name="resume"
+                (change)="handleFileInput($event.target.files[0])" />
               <span class="file-cta">
-                <!-- <span class="file-icon">
-                  <i class="fas fa-upload"></i>
-                </span> -->
-                <span class="file-label"> Döküman Ekle </span>
+                <span class="file-label">Döküman Ekle</span>
               </span>
             </label>
           </div>
-        
-          <!-- <a class="navbar-item addDocument" href="javascript:void(0);">Döküman Ekle</a> -->
-          
-          <!-- <label for="file-upload" class="custom-file-upload">
-            <input type="file" name="file" accept=".pdf" (change)="handleFileInput($event.target.files[0])">
-            <i class="fa fa-cloud-upload"></i> Custom Upload
-        </label> -->
         </ng-template>
         <a (click)="logout()" class="navbar-item" href="javascript:void(0);">Çıkış</a>
       </div>
@@ -59,4 +41,5 @@
   </div>
 </nav>
 
-<app-modal *ngIf="showModal" [showModal]="sentState" (onClose)="sentInviteEmployee($event)"></app-modal>
+<app-modal *ngIf="showModal" [showModal]="state" [header]="'Personel Davet Et'" [form]="1"
+  (onClose)="sentInviteEmployee($event)"></app-modal>

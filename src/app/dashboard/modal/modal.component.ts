@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
-import { DatabaseService } from 'src/app/shared/services/database.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
-import { Company } from 'src/app/shared/models/company';
+import emailjs, { EmailJSResponseStatus, send } from 'emailjs-com';
+import { DatabaseService } from 'src/app/shared/services/database.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-modal',
@@ -12,44 +12,65 @@ import { Company } from 'src/app/shared/models/company';
 	styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit {
-	@Input() sentState: boolean = false;
+	@Input() state: boolean = false;
+	@Input() header: boolean = false;
+	@Input() form: number;
 
 	@Output() onClose = new EventEmitter();
 
 	constructor(
 		private notify: NotificationService,
-		private db: DatabaseService,
 		private auth: AuthService,
-		private valid: ValidationService
+		private valid: ValidationService,
+		private db: DatabaseService,
+		private fb: FormBuilder,
 	) { }
 
 	mailAddress: string;
 	mailName: string;
 	nMailName: string;
-	uid: string;
+	cid: string;
 	cName: string;
+
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
 			if (user.manager) {
-				this.uid = user.manager.company.uid;
+				this.cid = user.manager.company.uid;
 				this.cName = user.manager.company.name;
 			}
 		});
 	}
 
-	sendMail() {
-		this.nMailName = this.mailName.replace(' ', '%20');
-		this.cName = this.cName.replace(' ', '%20');
-		if (this.mailAddress && this.mailName) {
-			if (this.valid.checkEmail(this.mailAddress)) {
-				if (this.valid.checkFullName(this.mailName)) {
-					var templateParams = {
-						from_name: this.cName,
-						to_name: this.mailName,
-						to_email: this.mailAddress,
-						message: `https://static-print.web.app/auth/register/${this.uid}/${this.cName}/${this
-							.nMailName}/${this.mailAddress}`
-					};
+	inviteEmployee = this.fb.group({
+		fullName: [],
+		email: []
+	});
+
+	sendMail(form: FormGroup, sendType: number) {
+		console.log(form);
+		
+		if (form.value.email && form.value.fullName) {
+			if (this.valid.checkEmail(form.value.email)) {
+				if (this.valid.checkFullName(form.value.fullName)) {
+					let fullName = form.value.fullName.replace(' ', '%20');
+					let companyName = this.cName.replace(' ', '%20');
+					let templateParams;
+					if (sendType == 1) {
+						templateParams = {
+							from_name: this.cName,
+							to_name: form.value.fullName,
+							to_email: form.value.email,
+							message: `https://static-print.web.app/auth/register/${this.cid}/${companyName}/${fullName}/${form.value.email}`
+						};
+					}
+					else if (sendType == 2) {
+						templateParams = {
+							from_name: this.cName,
+							to_name: form.value.fullName,
+							to_email: form.value.email,
+							message: `https://static-print.web.app/auth/login\nKullanıcı Adı: ${form.value.email}\nŞifre: ${form.value.password}`
+						};
+					}
 					emailjs
 						.send('service_plbvjsa', 'template_wb9aoxv', templateParams, 'user_ap9e5pxx5z5g6LVeEWBC5')
 						.then((result: EmailJSResponseStatus) => {
@@ -58,13 +79,26 @@ export class ModalComponent implements OnInit {
 						.catch((error) => {
 							console.log(error.text);
 						});
-					this.onClose.emit(!this.sentState);
+					this.onClose.emit(!this.state);
 				} else this.notify.warning('Ad Soyad Sadece Harflerden Oluşmalıdır.');
 			} else this.notify.warning('Geçerli Bir Email Adresi Giriniz.');
 		} else this.notify.warning('Tüm Alanlar Doldurulmalıdır.');
 	}
 
+	printerAccount = this.fb.group({
+		fullName: [],
+		email: [],
+		password: []
+	});
+
+	async addPrinterAccount() {
+		await this.auth.registerAccount(this.printerAccount.getRawValue(), this.cid, true).then(() => {
+			this.sendMail(this.printerAccount, 2)
+			this.onClose.emit(!this.state)
+		});
+	}
+
 	close() {
-		this.onClose.emit(this.sentState);
+		this.onClose.emit(this.state);
 	}
 }

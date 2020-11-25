@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 	templateUrl: './login.component.html',
 	styleUrls: [ './login.component.css' ]
 })
+
 export class LoginComponent implements OnInit {
 	constructor(private auth: AuthService, private fb: FormBuilder, private router: Router) {}
 

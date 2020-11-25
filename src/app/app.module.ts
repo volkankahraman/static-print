@@ -21,6 +21,7 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { CompaniesComponent } from './dashboard/companies/companies.component';
 import { DocumentsComponent } from './dashboard/documents/documents.component';
 import { EmployeesComponent } from './dashboard/employees/employees.component';
+import { PrinterAccountComponent } from './dashboard/printer-account/printer-account.component';
 
 @NgModule({
 	declarations: [
@@ -35,7 +36,8 @@ import { EmployeesComponent } from './dashboard/employees/employees.component';
 		ModalComponent,
 		CompaniesComponent,
 		DocumentsComponent,
-		EmployeesComponent
+		EmployeesComponent,
+		PrinterAccountComponent
 	],
 	imports: [
 		BrowserModule,

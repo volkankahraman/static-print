@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
-import { Router } from '@angular/router';
 import { Upload } from 'src/app/shared/models/upload';
 
 @Component({
@@ -10,14 +9,12 @@ import { Upload } from 'src/app/shared/models/upload';
 	templateUrl: './header.component.html',
 	styleUrls: [ './header.component.css' ]
 })
-export class HeaderComponent implements OnInit {
-	@Input() user: any;
 
+export class HeaderComponent implements OnInit {
 	constructor(
 		private auth: AuthService,
 		private notify: NotificationService,
 		private db: DatabaseService,
-		private router: Router
 	) {}
 
 	templateParams: any;
@@ -37,6 +34,8 @@ export class HeaderComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
+			console.log("sa");
+			
 			if (user.admin) {
 				//codes
 			} else if (user.manager) {
@@ -59,6 +58,7 @@ export class HeaderComponent implements OnInit {
 			this.notify.success('Çalışan Davet Edildi.');
 		} else this.showModal = state;
 	}
+
 	async handleFileInput(file: File) {
 		let user = await this.auth.getCurrentUser();
 		let upload: Upload = new Upload(file);

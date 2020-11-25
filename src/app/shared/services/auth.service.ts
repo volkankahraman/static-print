@@ -28,7 +28,7 @@ export class AuthService {
 		private notify: NotificationService,
 		private valid: ValidationService,
 		private router: Router
-	) {}
+	) { }
 
 	async getCurrentUser() {
 		let authUser = await this.auth.currentUser;
@@ -58,11 +58,11 @@ export class AuthService {
 		companyId?: string,
 		pMaster?: boolean
 	) {
-		if (user.password == user.rePassword) {
+		if (pMaster || (user.password == user.rePassword)) {
 			if (this.valid.checkFullName(user.fullName))
 				this.auth
 					.createUserWithEmailAndPassword(user.email, user.password)
-					.then(async (res) => {
+					.then(async (res) => {						
 						if (res.user) {
 							// Manager signing
 							if (companyId == undefined) {
@@ -94,6 +94,6 @@ export class AuthService {
 
 	async logout() {
 		await this.auth.signOut();
-		this.router.navigate([ '/auth', 'login' ]);
+		this.router.navigate(['/auth', 'login']);
 	}
 }
