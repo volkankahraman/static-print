@@ -55,7 +55,8 @@ export class AuthService {
 
 	async registerAccount(
 		user: { email: string; password: string; rePassword: string; fullName: string; companyName: string },
-		companyId?: string
+		companyId?: string,
+		pMaster?: boolean
 	) {
 		if (user.password == user.rePassword) {
 			if (this.valid.checkFullName(user.fullName))
@@ -63,19 +64,15 @@ export class AuthService {
 					.createUserWithEmailAndPassword(user.email, user.password)
 					.then(async (res) => {
 						if (res.user) {
-							console.log(companyId);
-
+							// Manager signing
 							if (companyId == undefined) {
-								console.log('if companyID ', companyId);
-
 								this.db.addManager(res.user, user.fullName, user.companyName).then((manager) => {
-									console.log('BURASI MANAGER', manager);
-
 									this.currUser.next(manager);
 								});
+							} else if (pMaster) {
+								return await this.db.addPMaster(res.user, user.fullName, companyId);
 							} else {
-								console.log('else companyID ', companyId);
-
+								// Employee signing
 								await this.db.addEmployee(res.user, user.fullName, companyId).then((employee) => {
 									this.currUser.next(employee);
 								});

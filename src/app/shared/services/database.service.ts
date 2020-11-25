@@ -8,6 +8,7 @@ import { Admin } from '../models/admin';
 import { Company } from '../models/company';
 import { Employee } from '../models/employee';
 import { Manager } from '../models/manager';
+import { Pmaster } from '../models/pmaster';
 import { Upload } from '../models/upload';
 import { User } from '../models/user';
 import { StorageService } from './storage.service';
@@ -53,6 +54,26 @@ export class DatabaseService {
 		await this.cf.httpsCallable('addRole')({ type: 'employee', userId: newEmployee.uid }).toPromise();
 
 		return newEmployee;
+	}
+
+	async addPMaster(user: firebase.User, fullName: string, companyId: string) {
+		let newPmaster: Pmaster = new Pmaster(user.uid, user.email, user.email.split('@')[0], fullName);
+
+		let invitedcompany = await this.db.collection('companies').doc(companyId).ref.get();
+		let companyInstance = new Company(invitedcompany.data().name);
+
+		companyInstance.uid = invitedcompany.id;
+
+		newPmaster.company = companyInstance;
+
+		await this.db
+			.collection('users')
+			.doc(newPmaster.uid)
+			.set({ ...newPmaster.getInstance(), company: companyInstance.uid });
+
+		await this.cf.httpsCallable('addRole')({ type: 'pmaster', userId: newPmaster.uid }).toPromise();
+
+		return newPmaster;
 	}
 
 	async getUserData(uid: string, admin: Boolean) {
