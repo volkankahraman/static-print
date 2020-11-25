@@ -12,7 +12,11 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 export class EmployeesComponent implements OnInit {
   employees;
 
-  constructor(private auth: AuthService, private db: DatabaseService, private router: Router) { }
+  constructor(
+    private auth: AuthService,
+    private db: DatabaseService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.auth.getCurrentUser().then((user) => {
@@ -24,7 +28,7 @@ export class EmployeesComponent implements OnInit {
           this.employees = employees;
         });
       }
-      else this.router.navigate([ '/dashboard' ]);
+      else this.router.navigate(['/dashboard']);
     })
   }
 }

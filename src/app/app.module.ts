@@ -22,6 +22,7 @@ import { CompaniesComponent } from './dashboard/companies/companies.component';
 import { DocumentsComponent } from './dashboard/documents/documents.component';
 import { EmployeesComponent } from './dashboard/employees/employees.component';
 import { PrinterAccountComponent } from './dashboard/printer-account/printer-account.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
 	declarations: [
@@ -46,7 +47,8 @@ import { PrinterAccountComponent } from './dashboard/printer-account/printer-acc
 		AngularFireFunctionsModule,
 		AngularFireStorageModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		NgxDropzoneModule
 	],
 	providers: [ AuthService ],
 	bootstrap: [ AppComponent ]

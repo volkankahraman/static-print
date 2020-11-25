@@ -11,7 +11,9 @@ export class PrinterAccountComponent implements OnInit {
   printAccount: boolean = false;
   showModal: boolean = false;
 
-  constructor(private notify: NotificationService) { }
+  constructor(
+    private notify: NotificationService
+  ) { }
 
   addPrintAccount() {
     this.showModal = true;

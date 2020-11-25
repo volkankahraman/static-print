@@ -1,7 +1,5 @@
-import { flatten } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { DatabaseService } from 'src/app/shared/services/database.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +12,10 @@ export class SidebarComponent implements OnInit {
   showAdminOperations: boolean = false;
   showManagementOperations: boolean = false;
   showDocumentOperations: boolean = false;
-  constructor(private auth: AuthService, private db: DatabaseService) { }
+
+  constructor(
+    private auth: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.auth.getCurrentUser().then((user) => {

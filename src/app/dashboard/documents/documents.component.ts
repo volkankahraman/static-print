@@ -6,12 +6,17 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 @Component({
 	selector: 'app-documents',
 	templateUrl: './documents.component.html',
-	styleUrls: [ './documents.component.css' ]
+	styleUrls: ['./documents.component.css']
 })
+
 export class DocumentsComponent implements OnInit {
 	documents;
 
-	constructor(private auth: AuthService, private db: DatabaseService, private router: Router) {}
+	constructor(
+		private auth: AuthService,
+		private db: DatabaseService,
+		private router: Router
+	) { }
 
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
@@ -28,7 +33,7 @@ export class DocumentsComponent implements OnInit {
 				this.db.getUserDocs(userId).then((documents) => {
 					this.documents = documents;
 				});
-			} else this.router.navigate([ '/dashboard' ]);
+			} else this.router.navigate(['/dashboard']);
 		});
 	}
 }

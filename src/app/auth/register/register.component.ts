@@ -8,13 +8,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 	selector: 'app-register',
 	templateUrl: './register.component.html'
 })
+
 export class RegisterComponent implements OnInit {
 	constructor(
 		private auth: AuthService,
 		private fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
 		private router: Router
-	) {}
+	) { }
 
 	registerForm = this.fb.group({
 		email: [],
@@ -45,17 +46,16 @@ export class RegisterComponent implements OnInit {
 	}
 
 	async register() {
-		if (this.companyId != undefined) {
+		if (this.companyId != undefined)
 			await this.auth.registerAccount(this.registerForm.getRawValue(), this.companyId);
-		} else {
+		else
 			await this.auth.registerAccount(this.registerForm.getRawValue());
-		}
 
 		let isUser: boolean;
 		this.auth.currUser.subscribe((authState) => {
 			isUser = !!authState;
 			if (isUser) {
-				this.router.navigate([ '/dashboard' ]);
+				this.router.navigate(['/dashboard']);
 			}
 		});
 	}

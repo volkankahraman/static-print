@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { async } from '@angular/core/testing';
-import { Upload } from 'src/app/shared/models/upload';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Component({
 	selector: 'app-content',
 	templateUrl: './content.component.html',
-	styleUrls: [ './content.component.css' ]
+	styleUrls: ['./content.component.css']
 })
+
 export class ContentComponent implements OnInit {
 	employeeCount: Number = 0;
 	showEmployeeCount: boolean = false;
@@ -23,7 +21,10 @@ export class ContentComponent implements OnInit {
 	role: string = '';
 	displayName: string = '';
 
-	constructor(private auth: AuthService, private db: DatabaseService) {}
+	constructor(
+		private auth: AuthService,
+		private db: DatabaseService
+	) { }
 
 	ngOnInit(): void {
 		let companyId: string;

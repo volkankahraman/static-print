@@ -7,6 +7,7 @@ declare var particlesJS: any;
 	templateUrl: './auth.component.html',
 	styleUrls: [ './auth.component.css' ]
 })
+
 export class AuthComponent implements OnInit {
 	partJson: Object = environment.partJson;
 	jsonUri = 'data:text/plain;base64,' + window.btoa(JSON.stringify(this.partJson));

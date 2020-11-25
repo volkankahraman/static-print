@@ -7,11 +7,15 @@ import { environment } from 'src/environments/environment';
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	styleUrls: [ './login.component.css' ]
+	styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent implements OnInit {
-	constructor(private auth: AuthService, private fb: FormBuilder, private router: Router) {}
+	constructor(
+		private auth: AuthService,
+		private fb: FormBuilder,
+		private router: Router
+	) { }
 
 	loginForm = this.fb.group({
 		email: [],
@@ -30,7 +34,7 @@ export class LoginComponent implements OnInit {
 		this.auth.getUser().subscribe((authState) => {
 			isUser = !!authState;
 			if (isUser) {
-				this.router.navigate([ '/dashboard' ]);
+				this.router.navigate(['/dashboard']);
 			}
 		});
 	}

@@ -24,6 +24,17 @@ nav.navbar {
 .addEmployee:focus {
     background-color: tomato !important;
 }
-.file.is-success .file-cta:hover{
-    background-color: #218838 !important;
+
+.addDocument {
+    background-color: #48c774;
+    color: white !important;
+    border-radius: 4px;
+}
+
+.addDocument:hover {
+    background-color: #41b96b !important;
+}
+
+.addDocument:focus {
+    background-color: #41b96b !important;
 }

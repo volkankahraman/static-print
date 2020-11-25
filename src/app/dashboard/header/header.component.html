@@ -18,21 +18,14 @@
         </ng-template>
         <ng-template [ngIf]="showAddEmployee">
           <div class="navbar-item file">
-            <a class="navbar-item addEmployee" (click)="sendInviteEmployee()" href="javascript:void(0);">Personel Davet
+            <a class="navbar-item addEmployee" (click)="sendModalState(1,'Personel Davet Et')" href="javascript:void(0);">Personel Davet
               Et</a>
           </div>
         </ng-template>
         <ng-template [ngIf]="showAddDocument">
           <div class="navbar-item file is-success">
-            <a class="navbar-item addEmployee" (click)="sendInviteEmployee()" href="javascript:void(0);">Döküman
+            <a class="navbar-item addDocument" (click)="sendModalState(3,'Dosya Yükle')" href="javascript:void(0);">Döküman
               Ekle</a>
-            <label class="file-label">
-              <input class="file-input" type="file" accept=".pdf" name="resume"
-                (change)="handleFileInput($event.target.files[0])" />
-              <span class="file-cta">
-                <span class="file-label">Döküman Ekle</span>
-              </span>
-            </label>
           </div>
         </ng-template>
         <a (click)="logout()" class="navbar-item" href="javascript:void(0);">Çıkış</a>
@@ -41,5 +34,5 @@
   </div>
 </nav>
 
-<app-modal *ngIf="showModal" [showModal]="state" [header]="'Personel Davet Et'" [form]="1"
-  (onClose)="sentInviteEmployee($event)"></app-modal>
+<app-modal *ngIf="showModal" [showModal]="state" [header]='header' [form]='formType'
+  (onClose)="updateModalState($event)"></app-modal>

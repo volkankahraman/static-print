@@ -1,21 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { NotificationService } from 'src/app/shared/services/notification.service';
-import { DatabaseService } from 'src/app/shared/services/database.service';
-import { Upload } from 'src/app/shared/models/upload';
 
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	styleUrls: [ './header.component.css' ]
+	styleUrls: ['./header.component.css']
 })
 
 export class HeaderComponent implements OnInit {
 	constructor(
-		private auth: AuthService,
-		private notify: NotificationService,
-		private db: DatabaseService,
-	) {}
+		private auth: AuthService
+	) { }
 
 	templateParams: any;
 	isModalActive: string = '';
@@ -28,14 +23,23 @@ export class HeaderComponent implements OnInit {
 	showDocuments: boolean = false;
 
 	showModal: boolean = false;
-	sendInviteEmployee() {
+	formType: number;
+	header: string;
+
+	sendModalState(formType: number, header: string) {
+		this.formType = formType
+		this.header = header
 		this.showModal = true;
+	}
+
+	updateModalState(state) {
+		if (state) {
+			this.showModal = !state;
+		} else this.showModal = state;
 	}
 
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
-			console.log("sa");
-			
 			if (user.admin) {
 				//codes
 			} else if (user.manager) {
@@ -50,29 +54,5 @@ export class HeaderComponent implements OnInit {
 
 	logout() {
 		this.auth.logout();
-	}
-
-	sentInviteEmployee(state) {
-		if (state) {
-			this.showModal = !state;
-			this.notify.success('Çalışan Davet Edildi.');
-		} else this.showModal = state;
-	}
-
-	async handleFileInput(file: File) {
-		let user = await this.auth.getCurrentUser();
-		let upload: Upload = new Upload(file);
-
-		this.db
-			.addDocument(upload, user)
-			.then(async (res) => {
-				console.log(res.data());
-				this.notify.success('Belge Başarıyla Kaydedildi.');
-			})
-			.catch((e) => {
-				console.error(e)
-			this.notify.error("Belge Yüklenemedi.")	
-			}
-				);
 	}
 }

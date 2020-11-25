@@ -5,12 +5,14 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import emailjs, { EmailJSResponseStatus, send } from 'emailjs-com';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Upload } from 'src/app/shared/models/upload';
 
 @Component({
 	selector: 'app-modal',
 	templateUrl: './modal.component.html',
 	styleUrls: ['./modal.component.css']
 })
+
 export class ModalComponent implements OnInit {
 	@Input() state: boolean = false;
 	@Input() header: boolean = false;
@@ -41,14 +43,16 @@ export class ModalComponent implements OnInit {
 		});
 	}
 
+	close() {
+		this.onClose.emit(this.state);
+	}
+
 	inviteEmployee = this.fb.group({
 		fullName: [],
 		email: []
 	});
 
 	sendMail(form: FormGroup, sendType: number) {
-		console.log(form);
-		
 		if (form.value.email && form.value.fullName) {
 			if (this.valid.checkEmail(form.value.email)) {
 				if (this.valid.checkFullName(form.value.fullName)) {
@@ -79,6 +83,10 @@ export class ModalComponent implements OnInit {
 						.catch((error) => {
 							console.log(error.text);
 						});
+					if (sendType == 1)
+						this.notify.success("Personel Davet Edildi.")
+					else if (sendType == 2)
+						this.notify.success("Yazıcı Hesabı Eklendi ve Mail Gönderildi.")
 					this.onClose.emit(!this.state);
 				} else this.notify.warning('Ad Soyad Sadece Harflerden Oluşmalıdır.');
 			} else this.notify.warning('Geçerli Bir Email Adresi Giriniz.');
@@ -98,7 +106,33 @@ export class ModalComponent implements OnInit {
 		});
 	}
 
-	close() {
-		this.onClose.emit(this.state);
+	files: File[] = [];
+	fileForm = this.fb.group({
+		fileName: []
+	})
+
+	onSelect(event) {
+		this.files.push(...event.addedFiles);
+	}
+
+	onRemove(event) {
+		this.files.splice(this.files.indexOf(event), 1);
+	}
+
+	async uploadFile(file: File[]) {
+		let user = await this.auth.getCurrentUser();
+		if (file.length > 0) {
+			let upload: Upload = new Upload(file[0]);
+
+			this.db
+				.addDocument(upload, user)
+				.then(async (res) => {
+					this.notify.success('Belge Başarıyla Kaydedildi.');
+					this.onClose.emit(!this.state)
+				})
+				.catch((e) => {
+					this.notify.error("Belge Yüklenemedi.")
+				});
+		}
 	}
 }

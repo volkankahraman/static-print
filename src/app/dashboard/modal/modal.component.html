@@ -5,71 +5,6 @@
       <p class="modal-card-title">{{ header }}</p>
       <button class="delete" aria-label="close" (click)="close()"></button>
     </header>
-
-    <!-- <section class="modal-card-body">
-      <ng-template [ngIf]="form == 1">
-        <div class="field">
-          <label class="label">Çalışanın Adı</label>
-          <div class="control has-icons-left">
-            <input class="input" type="text" [(ngModel)]="mailName" placeholder="İsim" />
-            <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
-            </span>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label">Email</label>
-          <div class="control has-icons-left">
-            <input class="input" type="email" [(ngModel)]="mailAddress" placeholder="Email" />
-            <span class="icon is-small is-left">
-              <i class="fas fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template [ngIf]="form == 2">
-        <div class="field">
-          <label class="label">Hesap Adı</label>
-          <div class="control has-icons-left">
-            <input class="input" type="text" [(ngModel)]="paName" placeholder="Hesap Adı" />
-            <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
-            </span>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label">Email</label>
-          <div class="control has-icons-left">
-            <input class="input" type="email" [(ngModel)]="paEmail" placeholder="Email" />
-            <span class="icon is-small is-left">
-              <i class="fas fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label">Şifre</label>
-          <div class="control has-icons-left">
-            <input class="input" type="password" [(ngModel)]="paPassword" placeholder="*****" />
-            <span class="icon is-small is-left">
-              <i class="fas fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-      </ng-template>
-    </section>
-
-    <footer class="modal-card-foot">
-      <ng-template [ngIf]="form == 1">
-        <button class="button is-success" (click)="sendMail()">Davet Et</button>
-      </ng-template>
-      <ng-template [ngIf]="form == 2">
-        <button class="button is-success" (click)="addPrinterAccount()">Ekle</button>
-      </ng-template>
-      <button class="button" (click)="close()">İptal</button>
-    </footer> -->
     <ng-template [ngIf]="form == 1">
       <form *ngIf="inviteEmployee" [formGroup]="inviteEmployee" (ngSubmit)="sendMail(inviteEmployee,1)" class="p-0">
         <section class="modal-card-body">
@@ -100,7 +35,6 @@
         </footer>
       </form>
     </ng-template>
-
     <ng-template [ngIf]="form == 2">
       <form *ngIf="printerAccount" [formGroup]="printerAccount" (ngSubmit)="addPrinterAccount(printerAccount,2)"
         class="p-0">
@@ -110,7 +44,7 @@
             <div class="control has-icons-left has-icons-right">
               <input formControlName="fullName" class="input" type="text" placeholder="Hesap Adı">
               <span class="icon is-medium is-left">
-                <i class="fas fa-envelope fa-lg"></i>
+                <i class="fas fa-user fa-lg"></i>
               </span>
             </div>
           </div>
@@ -136,6 +70,36 @@
         <footer class="modal-card-foot field is-grouped is-grouped-centered">
           <p class="control">
             <button class="button is-success my-0">Yazıcı Hesabı Ekle</button>
+            <button class="button is-danger my-0" (click)="close()">İptal</button>
+          </p>
+        </footer>
+      </form>
+    </ng-template>
+    <ng-template [ngIf]="form == 3">
+      <form *ngIf="fileForm" [formGroup]="fileForm" (ngSubmit)="uploadFile(files,1)" class="p-0">
+        <section class="modal-card-body">
+          <label class="label">Dosya Adı</label>
+          <div class="field">
+            <div class="control has-icons-left has-icons-right">
+              <input formControlName="fileName" class="input" type="text" placeholder="Dosya Adı">
+              <span class="icon is-medium is-left">
+                <i class="fas fa-file fa-lg"></i>
+              </span>
+            </div>
+          </div>
+          <label class="label">Dosya</label>
+          <div class="field">
+            <ngx-dropzone [accept]="'application/pdf'" [multiple]="'false'" (change)="onSelect($event)">
+              <ngx-dropzone-label>Dosya Yüklemek İçin Sürükle.</ngx-dropzone-label>
+              <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+              </ngx-dropzone-preview>
+            </ngx-dropzone>
+          </div>
+        </section>
+        <footer class="modal-card-foot field is-grouped is-grouped-centered">
+          <p class="control">
+            <button class="button is-success my-0">Yükle</button>
             <button class="button is-danger my-0" (click)="close()">İptal</button>
           </p>
         </footer>
