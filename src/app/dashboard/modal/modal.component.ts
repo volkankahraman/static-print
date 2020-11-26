@@ -64,7 +64,10 @@ export class ModalComponent implements OnInit {
 							from_name: this.cName,
 							to_name: form.value.fullName,
 							to_email: form.value.email,
-							message: `https://static-print.web.app/auth/register/${this.cid}/${companyName}/${fullName}/${form.value.email}`
+							message: `https://static-print.web.app/auth/register/${this.cid}/${companyName}/${fullName}/${form.value.email}`,
+							username:"",
+							password:""
+
 						};
 					}
 					else if (sendType == 2) {
@@ -72,7 +75,9 @@ export class ModalComponent implements OnInit {
 							from_name: this.cName,
 							to_name: form.value.fullName,
 							to_email: form.value.email,
-							message: `https://static-print.web.app/auth/login\nKullanıcı Adı: ${form.value.email}\nŞifre: ${form.value.password}`
+							message: `https://static-print.web.app/auth/login`,
+							username: `Kullanıcı Adı: ${form.value.email}`,
+							password: `Şifre: ${form.value.password}`
 						};
 					}
 					emailjs
