@@ -8,11 +8,12 @@
   <thead>
     <tr>
       <th>No</th>
-      <th>Ad Soyad</th>
+      <th>Ad Soyad  <input class="form-control" style="float: right;"  placeholder="Personel Ara" [(ngModel)]="filterText"/></th>
     </tr>
+   
   </thead>
   <tbody>
-    <tr *ngFor="let employee of employees; let i = index">
+    <tr *ngFor="let employee of employees | employeeFilter:filterText; let i = index ">
       <th>{{ i + 1 }}</th>
       <td>{{ employee.displayName }}</td>
     </tr>

@@ -11,6 +11,7 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 
 export class DocumentsComponent implements OnInit {
 	documents;
+	filterText = "";
 
 	constructor(
 		private auth: AuthService,

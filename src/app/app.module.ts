@@ -23,6 +23,8 @@ import { DocumentsComponent } from './dashboard/documents/documents.component';
 import { EmployeesComponent } from './dashboard/employees/employees.component';
 import { PrinterAccountComponent } from './dashboard/printer-account/printer-account.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { EmployeeFilterPipe } from './dashboard/employees/employee-filter.pipe';
+import { DocumentFilterPipe } from './dashboard/documents/document-filter.pipe';
 
 @NgModule({
 	declarations: [
@@ -38,7 +40,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 		CompaniesComponent,
 		DocumentsComponent,
 		EmployeesComponent,
-		PrinterAccountComponent
+		PrinterAccountComponent,
+		EmployeeFilterPipe,
+		DocumentFilterPipe
 	],
 	imports: [
 		BrowserModule,
