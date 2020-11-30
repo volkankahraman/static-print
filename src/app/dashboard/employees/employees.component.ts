@@ -26,7 +26,7 @@ export class EmployeesComponent implements OnInit {
         let managerId: string = user.manager.uid;
 
         this.db.getEmployees(companyId, managerId).then((employees) => {
-          this.employees = employees;
+          this.employees = employees;          
         });
       }
       else this.router.navigate(['/dashboard']);

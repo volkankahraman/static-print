@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
@@ -8,10 +10,12 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 })
 
 export class PrinterAccountComponent implements OnInit {
-  printAccount: boolean = false;
+  printerAccount;
   showModal: boolean = false;
 
   constructor(
+    private auth: AuthService,
+    private db: DatabaseService,
     private notify: NotificationService
   ) { }
 
@@ -26,5 +30,21 @@ export class PrinterAccountComponent implements OnInit {
     } else this.showModal = state;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.auth.getCurrentUser().then((user) => {
+      if (user.manager) {
+        let companyId: string = user.manager.company.uid;
+        let managerId: string = user.manager.uid;
+
+        this.db.getEmployees(companyId, managerId).then((employees) => {
+          for (let employee in employees) {
+            if (employees[employee]["userType"] == "pMaster") {
+              this.printerAccount = employees[employee]
+              break
+            }
+          }
+        });
+      }
+    })
+  }
 }

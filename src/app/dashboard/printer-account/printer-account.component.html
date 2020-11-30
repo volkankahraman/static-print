@@ -1,4 +1,4 @@
-<ng-template [ngIf]="printAccount == false">
+<ng-template [ngIf]="!printerAccount">
   <button class="button is-fullwidth is-success" (click)="addPrintAccount()">
     <span class="icon">
       <i class="fas fa-print"></i>
@@ -6,22 +6,18 @@
     <span>Yazıcı Hesabı Ekle</span>
   </button>
 </ng-template>
-<ng-template [ngIf]="printAccount">
+<ng-template [ngIf]="printerAccount">
   <div class="card">
-    <div class="card-image">
-      <figure class="image is-4by3">
-        <img src="assets/logo.png" alt="Placeholder image" />
-      </figure>
-    </div>
     <div class="card-content">
       <div class="media">
         <div class="media-left">
           <figure class="image is-48x48">
-            <img src="assets/logo.png" alt="Placeholder image" />
+            <img src="assets/logo.png" alt="{{ printerAccount.displayName }}" />
           </figure>
         </div>
         <div class="media-content">
-          <p class="title is-4 mt-0">John Smith</p>
+          <p class="title is-4 mt-0">{{ printerAccount.displayName }}</p>
+          <p class="subtitle is-6">{{ printerAccount.email }}</p>
         </div>
       </div>
     </div>
