@@ -18,9 +18,7 @@ export class DocumentsComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
-			if (user.manager || user.pMaster) {
-				if(user.pMaster) this.showNavigation = false 
-
+			if (user.manager) {
 				let companyId: string = user.manager.company.uid;
 
 				this.db.getCompanyDocs(companyId).then((documents) => {
@@ -44,7 +42,27 @@ export class DocumentsComponent implements OnInit {
 				this.db.getUserDocs(userId).then((documents) => {
 					this.documents = documents;
 				});
-			} else this.router.navigate(['/dashboard']);
+			} else if (user.pMaster) {
+				let companyId: string = user.pMaster.company.uid;
+				this.showNavigation = false
+
+				this.db.getCompanyDocs(companyId).then((documents) => {
+					documents.subscribe((documentsInstance) => {
+						let companyDocList = [];
+						for (const doc of documentsInstance) {
+							if (doc.companyId == companyId) {
+								let docUser = user.manager;
+								companyDocList.push({
+									...doc,
+									user: docUser
+								});
+							}
+						}
+						this.documents = companyDocList;
+					});
+				});
+			}
+			else this.router.navigate(['/dashboard']);
 		});
 	}
 }

@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
-			if (user.pMaster) this.isPMaster = true
+			if (user.pMaster) this.isPMaster = true			
 		})
 	}
 }
