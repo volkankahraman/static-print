@@ -158,9 +158,9 @@ export class DatabaseService {
 	async getEmployees(companyId: string, managerId: string) {
 		let employeeList = [];
 		let employees = (await this.db.collection('users').ref.get()).docs;
-		employees.forEach((employee) => {
+		employees.forEach(async (employee) => {
 			if (employee.data().company == companyId && employee.id != managerId) {
-				employeeList.push(employee.data());
+				employeeList.push({ ...employee.data(), userType: (await employee.data().role.get()).data().type });
 			}
 		});
 		return employeeList;
