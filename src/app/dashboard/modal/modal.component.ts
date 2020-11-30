@@ -10,9 +10,8 @@ import { Upload } from 'src/app/shared/models/upload';
 @Component({
 	selector: 'app-modal',
 	templateUrl: './modal.component.html',
-	styleUrls: ['./modal.component.css']
+	styleUrls: [ './modal.component.css' ]
 })
-
 export class ModalComponent implements OnInit {
 	@Input() state: boolean = false;
 	@Input() header: boolean = false;
@@ -25,8 +24,8 @@ export class ModalComponent implements OnInit {
 		private auth: AuthService,
 		private valid: ValidationService,
 		private db: DatabaseService,
-		private fb: FormBuilder,
-	) { }
+		private fb: FormBuilder
+	) {}
 
 	mailAddress: string;
 	mailName: string;
@@ -64,13 +63,12 @@ export class ModalComponent implements OnInit {
 							from_name: this.cName,
 							to_name: form.value.fullName,
 							to_email: form.value.email,
-							message: `https://static-print.web.app/auth/register/${this.cid}/${companyName}/${fullName}/${form.value.email}`,
-							username:"",
-							password:""
-
+							message: `https://static-print.web.app/auth/register/${this
+								.cid}/${companyName}/${fullName}/${form.value.email}`,
+							username: '',
+							password: ''
 						};
-					}
-					else if (sendType == 2) {
+					} else if (sendType == 2) {
 						templateParams = {
 							from_name: this.cName,
 							to_name: form.value.fullName,
@@ -88,10 +86,8 @@ export class ModalComponent implements OnInit {
 						.catch((error) => {
 							console.log(error.text);
 						});
-					if (sendType == 1)
-						this.notify.success("Personel Davet Edildi.")
-					else if (sendType == 2)
-						this.notify.success("Yazıcı Hesabı Eklendi ve Mail Gönderildi.")
+					if (sendType == 1) this.notify.success('Personel Davet Edildi.');
+					else if (sendType == 2) this.notify.success('Yazıcı Hesabı Eklendi ve Mail Gönderildi.');
 					this.onClose.emit(!this.state);
 				} else this.notify.warning('Ad Soyad Sadece Harflerden Oluşmalıdır.');
 			} else this.notify.warning('Geçerli Bir Email Adresi Giriniz.');
@@ -105,16 +101,18 @@ export class ModalComponent implements OnInit {
 	});
 
 	async addPrinterAccount() {
-		await this.auth.registerAccount(this.printerAccount.getRawValue(), this.cid, true).then(() => {
-			this.sendMail(this.printerAccount, 2)
-			this.onClose.emit(!this.state)
+		this.db.addPMaster(this.printerAccount.getRawValue(), this.cid).then(() => {
+			this.sendMail(this.printerAccount, 2);
+			this.onClose.emit(!this.state);
 		});
+		// await this.auth.registerAccount(this.printerAccount.getRawValue(), this.cid).then(() => {
+		// });
 	}
 
 	files: File[] = [];
 	fileForm = this.fb.group({
 		fileName: []
-	})
+	});
 
 	onSelect(event) {
 		this.files.push(...event.addedFiles);
@@ -128,15 +126,14 @@ export class ModalComponent implements OnInit {
 		let user = await this.auth.getCurrentUser();
 		if (file.length > 0) {
 			let upload: Upload = new Upload(file[0]);
-
 			this.db
 				.addDocument(upload, user)
 				.then(async (res) => {
 					this.notify.success('Belge Başarıyla Kaydedildi.');
-					this.onClose.emit(!this.state)
+					this.onClose.emit(!this.state);
 				})
 				.catch((e) => {
-					this.notify.error("Belge Yüklenemedi.")
+					this.notify.error('Belge Yüklenemedi.');
 				});
 		}
 	}

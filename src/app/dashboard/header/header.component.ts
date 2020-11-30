@@ -4,13 +4,10 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	styleUrls: ['./header.component.css']
+	styleUrls: [ './header.component.css' ]
 })
-
 export class HeaderComponent implements OnInit {
-	constructor(
-		private auth: AuthService
-	) { }
+	constructor(private auth: AuthService) {}
 
 	templateParams: any;
 	isModalActive: string = '';
@@ -27,8 +24,8 @@ export class HeaderComponent implements OnInit {
 	header: string;
 
 	sendModalState(formType: number, header: string) {
-		this.formType = formType
-		this.header = header
+		this.formType = formType;
+		this.header = header;
 		this.showModal = true;
 	}
 
@@ -40,14 +37,22 @@ export class HeaderComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
-			if (user.admin) {
-				//codes
-			} else if (user.manager) {
-				this.companyName = user.manager.company.name;
-				this.showAddEmployee = true;
-				this.showAddDocument = true;
-			} else if (user.employee) {
-				this.showAddDocument = true;
+			try {
+				if (user == null) throw Error('user yok low');
+				if (user.admin) {
+					//codes
+				} else if (user.manager) {
+					this.companyName = user.manager.company.name;
+					this.showAddEmployee = true;
+					this.showAddDocument = true;
+				} else if (user.employee) {
+					this.showAddDocument = true;
+				} else if (user.pMaster) {
+					//Pmaster componentları
+				}
+			} catch (error) {
+				// this.logout();
+				console.log(error);
 			}
 		});
 	}

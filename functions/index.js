@@ -18,3 +18,10 @@ exports.addRole = functions.https.onCall(async (ref) => {
 		await admin.firestore().collection('users').doc(ref.userId).update({ role: roleRef });
 	}
 });
+
+exports.addpMaster = functions.https.onCall(async (pMaster) => {
+	return admin.auth().createUser({
+		email: pMaster.email,
+		password: pMaster.password
+	});
+});

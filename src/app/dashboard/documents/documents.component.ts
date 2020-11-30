@@ -6,18 +6,13 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 @Component({
 	selector: 'app-documents',
 	templateUrl: './documents.component.html',
-	styleUrls: ['./documents.component.css']
+	styleUrls: [ './documents.component.css' ]
 })
-
 export class DocumentsComponent implements OnInit {
 	documents;
-	filterText = "";
+	filterText = '';
 
-	constructor(
-		private auth: AuthService,
-		private db: DatabaseService,
-		private router: Router
-	) { }
+	constructor(private auth: AuthService, private db: DatabaseService, private router: Router) {}
 
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
@@ -25,8 +20,19 @@ export class DocumentsComponent implements OnInit {
 				let companyId: string = user.manager.company.uid;
 
 				this.db.getCompanyDocs(companyId).then((documents) => {
-					this.documents = documents;
-					console.log(documents);
+					documents.subscribe((documentsInstance) => {
+						let companyDocList = [];
+						for (const doc of documentsInstance) {
+							if (doc.companyId == companyId) {
+								let docUser = user.manager;
+								companyDocList.push({
+									...doc,
+									user: docUser
+								});
+							}
+						}
+						this.documents = companyDocList;
+					});
 				});
 			} else if (user.employee) {
 				let userId: string = user.employee.uid;
@@ -34,7 +40,7 @@ export class DocumentsComponent implements OnInit {
 				this.db.getUserDocs(userId).then((documents) => {
 					this.documents = documents;
 				});
-			} else this.router.navigate(['/dashboard']);
+			} else this.router.navigate([ '/dashboard' ]);
 		});
 	}
 }

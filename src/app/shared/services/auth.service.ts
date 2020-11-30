@@ -28,11 +28,12 @@ export class AuthService {
 		private notify: NotificationService,
 		private valid: ValidationService,
 		private router: Router
-	) { }
+	) {}
 
 	async getCurrentUser() {
 		let authUser = await this.auth.currentUser;
 		let userClaims = await authUser.getIdTokenResult();
+
 		return this.db.getUserData(authUser.uid, userClaims.claims.admin || false);
 	}
 
@@ -55,22 +56,19 @@ export class AuthService {
 
 	async registerAccount(
 		user: { email: string; password: string; rePassword: string; fullName: string; companyName: string },
-		companyId?: string,
-		pMaster?: boolean
+		companyId?: string
 	) {
-		if (pMaster || (user.password == user.rePassword)) {
+		if (user.password == user.rePassword) {
 			if (this.valid.checkFullName(user.fullName))
 				this.auth
 					.createUserWithEmailAndPassword(user.email, user.password)
-					.then(async (res) => {						
+					.then(async (res) => {
 						if (res.user) {
 							// Manager signing
 							if (companyId == undefined) {
 								this.db.addManager(res.user, user.fullName, user.companyName).then((manager) => {
 									this.currUser.next(manager);
 								});
-							} else if (pMaster) {
-								return await this.db.addPMaster(res.user, user.fullName, companyId);
 							} else {
 								// Employee signing
 								await this.db.addEmployee(res.user, user.fullName, companyId).then((employee) => {
@@ -94,6 +92,6 @@ export class AuthService {
 
 	async logout() {
 		await this.auth.signOut();
-		this.router.navigate(['/auth', 'login']);
+		this.router.navigate([ '/auth', 'login' ]);
 	}
 }

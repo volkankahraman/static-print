@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { async } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { Observable } from 'rxjs';
 
 import { Admin } from '../models/admin';
 import { Company } from '../models/company';
@@ -56,13 +57,17 @@ export class DatabaseService {
 		return newEmployee;
 	}
 
-	async addPMaster(user: firebase.User, fullName: string, companyId: string) {
-		let newPmaster: Pmaster = new Pmaster(user.uid, user.email, user.email.split('@')[0], fullName);
+	async addPMaster(
+		user: { email: string; password: string; fullName: string; companyName: string },
+		companyId: string
+	) {
+		let pMasteruser = await this.cf.httpsCallable('addpMaster')(user).toPromise();
 
-		let invitedcompany = await this.db.collection('companies').doc(companyId).ref.get();
-		let companyInstance = new Company(invitedcompany.data().name);
+		let newPmaster: Pmaster = new Pmaster(pMasteruser.uid, user.email, user.email.split('@')[0], user.fullName);
 
-		companyInstance.uid = invitedcompany.id;
+		let companyInstance = new Company(user.companyName);
+
+		companyInstance.uid = companyId;
 
 		newPmaster.company = companyInstance;
 
@@ -71,7 +76,7 @@ export class DatabaseService {
 			.doc(newPmaster.uid)
 			.set({ ...newPmaster.getInstance(), company: companyInstance.uid });
 
-		await this.cf.httpsCallable('addRole')({ type: 'pmaster', userId: newPmaster.uid }).toPromise();
+		await this.cf.httpsCallable('addRole')({ type: 'pmaster', userId: pMasteruser.uid }).toPromise();
 
 		return newPmaster;
 	}
@@ -79,6 +84,7 @@ export class DatabaseService {
 	async getUserData(uid: string, admin: Boolean) {
 		let userInstance = (await this.db.collection('users').doc(uid).ref.get()).data();
 		let userType = (await userInstance.role.get()).data();
+
 		if (userType.type == 'admin') {
 			let admin = new Admin(uid, userInstance.email, userInstance.username, userInstance.displayName);
 			let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
@@ -106,6 +112,14 @@ export class DatabaseService {
 			employee.addCompany(company);
 
 			return { employee, isAdmin: false };
+		} else if (userType.type == 'pMaster') {
+			let pMaster = new Pmaster(uid, userInstance.email, userInstance.username, userInstance.displayName);
+			let companyInstance = await this.db.collection('companies').doc(userInstance.company).ref.get();
+			let company = new Company(companyInstance.data().name);
+			company.uid = companyInstance.id;
+			pMaster.addCompany(company);
+
+			return { pMaster, isAdmin: false };
 		}
 	}
 
@@ -162,19 +176,9 @@ export class DatabaseService {
 	}
 
 	async getCompanyDocs(companyId: string) {
-		let companyDocList = [];
-		let docs = (await this.db.collection('documents').ref.get()).docs;
-		for (const doc of docs) {
-			let docData = doc.data();
-			if (docData.companyId == companyId) {
-				let docUser = await this.db.collection('users').doc(docData.userId).ref.get();
-				companyDocList.push({
-					...doc.data(),
-					user: docUser.data()
-				});
-			}
-		}
-		return companyDocList;
+		let docs: Observable<any[]> = this.db.collection('documents').valueChanges();
+
+		return docs;
 	}
 
 	async getUserDocs(userId: string) {
