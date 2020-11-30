@@ -5,7 +5,7 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 @Component({
 	selector: 'app-content',
 	templateUrl: './content.component.html',
-	styleUrls: [ './content.component.css' ]
+	styleUrls: ['./content.component.css']
 })
 export class ContentComponent implements OnInit {
 	employeeCount: Number = 0;
@@ -17,10 +17,12 @@ export class ContentComponent implements OnInit {
 	documentCount: Number = 0;
 	showDocumentCount: boolean = false;
 
+	showWelcome: boolean = false;
+
 	role: string = '';
 	displayName: string = '';
 
-	constructor(private auth: AuthService, private db: DatabaseService) {}
+	constructor(private auth: AuthService, private db: DatabaseService) { }
 
 	ngOnInit(): void {
 		let companyId: string;
@@ -29,6 +31,7 @@ export class ContentComponent implements OnInit {
 			if (user.isAdmin) {
 				companyId = user.admin.company.uid;
 				managerId = user.admin.uid;
+				this.showWelcome = true;
 				this.showCompanyCount = true;
 				this.role = 'Admin';
 				this.displayName = user.admin.displayName;
@@ -38,6 +41,7 @@ export class ContentComponent implements OnInit {
 			} else if (user.manager) {
 				companyId = user.manager.company.uid;
 				managerId = user.manager.uid;
+				this.showWelcome = true;
 				this.showEmployeeCount = true;
 				this.showDocumentCount = true;
 				this.role = 'Yönetici';
@@ -51,12 +55,15 @@ export class ContentComponent implements OnInit {
 					});
 				});
 			} else if (user.employee) {
+				this.showWelcome = true;
 				this.showDocumentCount = true;
 				this.role = 'Çalışan';
 				this.displayName = user.employee.displayName;
 				this.db.getUserDocs(user.employee.uid).then(async (documents) => {
 					this.documentCount = documents.length;
 				});
+			} else if (user.pMaster) {
+				this.role = 'PMaster';
 			}
 		});
 	}

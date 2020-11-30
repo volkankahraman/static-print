@@ -26,6 +26,5 @@ export class PrinterAccountComponent implements OnInit {
     } else this.showModal = state;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

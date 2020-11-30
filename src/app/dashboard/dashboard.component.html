@@ -2,12 +2,19 @@
   <app-header></app-header>
   <div class="container">
     <div class="columns">
-      <div class="column is-3 ">
-        <app-sidebar></app-sidebar>
-      </div>
-      <div class="column is-9">
-        <router-outlet></router-outlet>
-      </div>
+      <ng-template [ngIf]="!isPMaster">
+        <div class="column is-3">
+          <app-sidebar></app-sidebar>
+        </div>
+        <div class="column is-9">
+          <router-outlet></router-outlet>
+        </div>  
+      </ng-template>
+      <ng-template [ngIf]="isPMaster">
+        <div class="column is-12">
+          <router-outlet></router-outlet>
+        </div>  
+      </ng-template>
     </div>
   </div>
 </div>

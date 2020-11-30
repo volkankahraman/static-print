@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
 	selector: 'app-dashboard',
@@ -12,7 +13,15 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class DashboardComponent implements OnInit {
-	constructor() { }
+	isPMaster: boolean = false;
 
-	ngOnInit(): void {}
+	constructor(
+		private auth: AuthService
+	) { }
+
+	ngOnInit(): void {
+		this.auth.getCurrentUser().then((user) => {
+			if (user.pMaster) this.isPMaster = true
+		})
+	}
 }

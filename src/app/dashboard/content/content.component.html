@@ -1,16 +1,18 @@
-<nav class="breadcrumb" aria-label="breadcrumbs">
-  <ul>
-    <li class="is-active"><a routerLink="/dashboard">Anasayfa</a></li>
-  </ul>
-</nav>
-<section class="hero is-info welcome is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">Hoşgeldin, {{ displayName }}</h1>
-      <h2 class="subtitle">Umarım harika bir gün geçiriyorsundur!</h2>
+<ng-template [ngIf]="showWelcome">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li class="is-active"><a routerLink="/dashboard">Anasayfa</a></li>
+    </ul>
+  </nav>
+  <section class="hero is-info welcome is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Hoşgeldin, {{ displayName }}</h1>
+        <h2 class="subtitle">Umarım harika bir gün geçiriyorsundur!</h2>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</ng-template>
 <section class="info-tiles">
   <div class="tile is-ancestor has-text-centered">
     <ng-template [ngIf]="showCompanyCount">
@@ -37,6 +39,15 @@
         </article>
       </div>
     </ng-template>
+    <ng-template [ngIf]="role == 'PMaster'">
+      <div class="column is-6">
+        <div>Dökümanlar</div>
+        <app-documents></app-documents>
+      </div>
+      <div class="column is-6">
+        <div>Bastırılanlar Dökümanlar</div>
+        <app-documents></app-documents>
+      </div>
+    </ng-template>
   </div>
-  <div></div>
 </section>

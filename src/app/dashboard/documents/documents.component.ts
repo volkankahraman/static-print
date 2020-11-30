@@ -6,17 +6,21 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 @Component({
 	selector: 'app-documents',
 	templateUrl: './documents.component.html',
-	styleUrls: [ './documents.component.css' ]
+	styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
 	documents;
 	filterText = '';
 
-	constructor(private auth: AuthService, private db: DatabaseService, private router: Router) {}
+	showNavigation: boolean = true;
+
+	constructor(private auth: AuthService, private db: DatabaseService, private router: Router) { }
 
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
-			if (user.manager) {
+			if (user.manager || user.pMaster) {
+				if(user.pMaster) this.showNavigation = false 
+
 				let companyId: string = user.manager.company.uid;
 
 				this.db.getCompanyDocs(companyId).then((documents) => {
@@ -40,7 +44,7 @@ export class DocumentsComponent implements OnInit {
 				this.db.getUserDocs(userId).then((documents) => {
 					this.documents = documents;
 				});
-			} else this.router.navigate([ '/dashboard' ]);
+			} else this.router.navigate(['/dashboard']);
 		});
 	}
 }

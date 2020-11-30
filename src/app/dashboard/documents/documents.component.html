@@ -1,15 +1,18 @@
-<nav class="breadcrumb" aria-label="breadcrumbs">
-  <ul>
-    <li><a routerLink="/dashboard">Anasayfa</a></li>
-    <li class="is-active"><a routerLink="/dashboard/documents">Dökümanlar</a></li>
-  </ul>
-</nav>
+<ng-template [ngIf]="showNavigation">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a routerLink="/dashboard">Anasayfa</a></li>
+      <li class="is-active"><a routerLink="/dashboard/documents">Dökümanlar</a></li>
+    </ul>
+  </nav>
+</ng-template>
 <table class="table is-fullwidth is-hoverable is-striped">
   <thead>
     <tr>
       <th>No</th>
       <th>Belge Adı</th>
-      <th>Belgeyi Yükleyen <input class="form-control" style="float: right;"  placeholder="Döküman Ara" [(ngModel)]="filterText"/></th>
+      <th>Belgeyi Yükleyen <input class="form-control" style="float: right;" placeholder="Döküman Ara"
+          [(ngModel)]="filterText" /></th>
     </tr>
   </thead>
   <tbody>
