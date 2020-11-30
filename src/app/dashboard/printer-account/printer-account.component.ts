@@ -4,47 +4,42 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
-  selector: 'app-printer-account',
-  templateUrl: './printer-account.component.html',
-  styleUrls: ['./printer-account.component.css']
+	selector: 'app-printer-account',
+	templateUrl: './printer-account.component.html',
+	styleUrls: [ './printer-account.component.css' ]
 })
-
 export class PrinterAccountComponent implements OnInit {
-  printerAccount;
-  showModal: boolean = false;
+	printerAccount;
+	showModal: boolean = false;
 
-  constructor(
-    private auth: AuthService,
-    private db: DatabaseService,
-    private notify: NotificationService
-  ) { }
+	constructor(private auth: AuthService, private db: DatabaseService, private notify: NotificationService) {}
 
-  addPrintAccount() {
-    this.showModal = true;
-  }
+	addPrintAccount() {
+		this.showModal = true;
+	}
 
-  addedPrinterAccount(state) {
-    if (state) {
-      this.showModal = !state;
-      this.notify.success('Yazıcı Hesabı Eklendi ve Mail Gönderildi');
-    } else this.showModal = state;
-  }
+	addedPrinterAccount(state) {
+		if (state) {
+			this.showModal = !state;
+			this.notify.success('Yazıcı Hesabı Eklendi ve Mail Gönderildi');
+		} else this.showModal = state;
+	}
 
-  ngOnInit(): void {
-    this.auth.getCurrentUser().then((user) => {
-      if (user.manager) {
-        let companyId: string = user.manager.company.uid;
-        let managerId: string = user.manager.uid;
+	ngOnInit(): void {
+		this.auth.getCurrentUser().then((user) => {
+			if (user.manager) {
+				let companyId: string = user.manager.company.uid;
+				let managerId: string = user.manager.uid;
 
-        this.db.getEmployees(companyId, managerId).then((employees) => {
-          for (let employee in employees) {
-            if (employees[employee]["userType"] == "pMaster") {
-              this.printerAccount = employees[employee]
-              break
-            }
-          }
-        });
-      }
-    })
-  }
+				this.db.getEmployees(companyId, managerId).then((employees) => {
+					for (let employee in employees) {
+						if (employees[employee]['userType'] == 'pMaster') {
+							this.printerAccount = employees[employee];
+							break;
+						}
+					}
+				});
+			}
+		});
+	}
 }

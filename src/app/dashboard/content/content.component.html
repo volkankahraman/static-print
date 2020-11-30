@@ -42,11 +42,11 @@
     <ng-template [ngIf]="role == 'PMaster'">
       <div class="column is-6">
         <div>Dökümanlar</div>
-        <app-documents></app-documents>
+        <app-documents [isPrinted]=false></app-documents>
       </div>
       <div class="column is-6">
-        <div>Bastırılanlar Dökümanlar</div>
-        <!-- <app-documents></app-documents> -->
+        <div>Yazdırılan Dökümanlar</div>
+        <app-documents [isPrinted]=true></app-documents>
       </div>
     </ng-template>
   </div>

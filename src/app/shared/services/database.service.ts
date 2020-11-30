@@ -129,13 +129,13 @@ export class DatabaseService {
 		if (user.employee) {
 			userId = user.employee.uid;
 			companyId = user.employee.company.uid;
-			url = user.employee.company.name + '/' + document.name;
+			url = Date.now().toString();
 		} else if (user.manager) {
 			userId = user.manager.uid;
 			companyId = user.manager.company.uid;
-			url = user.manager.company.name + '/' + document.name;
+			url = Date.now().toString();
 		}
-
+		url = url.split(' ').join('');
 		return this.st.uploadFile(document, url).then(async (res) => {
 			let downloadUrl = await res.ref.getDownloadURL();
 
@@ -178,7 +178,7 @@ export class DatabaseService {
 	}
 
 	async getCompanyDocs(companyId: string) {
-		let docs: Observable<any[]> = this.db.collection('documents').valueChanges();
+		let docs: Observable<any[]> = this.db.collection('documents').valueChanges({ idField: 'eventId' });
 
 		return docs;
 	}
@@ -199,5 +199,9 @@ export class DatabaseService {
 		}
 
 		return userDocList;
+	}
+
+	async setPrinted(uid: string) {
+		return this.db.collection('documents').doc(uid).update({ isPrinted: true });
 	}
 }

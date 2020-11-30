@@ -30,7 +30,8 @@
             ],
             "scripts": [
               "node_modules/particles.js/particles.js",
-              "src/index.js"
+              "src/index.js",
+              "node_modules/print.js/src/index.js"
             ]
           },
           "configurations": {
