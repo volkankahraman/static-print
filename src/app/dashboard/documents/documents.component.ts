@@ -1,7 +1,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as printJS from 'print-js';
-import { from } from 'rxjs';
+import { async, from } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 
@@ -26,11 +26,12 @@ export class DocumentsComponent implements OnInit {
 				let companyId: string = user.manager.company.uid;
 
 				this.db.getCompanyDocs(companyId).then((documents) => {
-					documents.subscribe((documentsInstance) => {
+					documents.subscribe(async (documentsInstance) => {
 						let companyDocList = [];
 						for (const doc of documentsInstance) {
 							if (doc.companyId == companyId) {
-								let docUser = user.manager;
+								let docUser = await this.db.getUserFromId(doc.userId);
+
 								companyDocList.push({
 									...doc,
 									user: docUser
@@ -51,13 +52,13 @@ export class DocumentsComponent implements OnInit {
 				this.showNavigation = false;
 
 				this.db.getCompanyDocs(companyId).then((documents) => {
-					documents.subscribe((documentsInstance) => {
+					documents.subscribe(async (documentsInstance) => {
 						let companyDocList = [];
 						for (const doc of documentsInstance) {
 							if (doc.companyId == companyId) {
+								let docUser = await this.db.getUserFromId(doc.userId);
 								if (this.isPrinted) {
 									if (doc.isPrinted) {
-										let docUser = user.pMaster;
 										companyDocList.push({
 											...doc,
 											user: docUser
@@ -65,7 +66,6 @@ export class DocumentsComponent implements OnInit {
 									}
 								} else {
 									if (doc.isPrinted == null || doc.isPrinted == false) {
-										let docUser = user.pMaster;
 										companyDocList.push({
 											...doc,
 											user: docUser

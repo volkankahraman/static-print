@@ -183,6 +183,10 @@ export class DatabaseService {
 		return docs;
 	}
 
+	async getUserFromId(userId) {
+		return (await this.db.collection('users').doc(userId).ref.get()).data();
+	}
+
 	async getUserDocs(userId: string) {
 		let userDocList = [];
 		let docs = (await this.db.collection('documents').ref.get()).docs;
