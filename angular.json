@@ -29,6 +29,7 @@
               "src/styles.css"
             ],
             "scripts": [
+
               "node_modules/particles.js/particles.js",
               "src/index.js",
               "node_modules/print.js/src/index.js"

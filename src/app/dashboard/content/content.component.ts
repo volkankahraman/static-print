@@ -5,7 +5,7 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 @Component({
 	selector: 'app-content',
 	templateUrl: './content.component.html',
-	styleUrls: ['./content.component.css']
+	styleUrls: [ './content.component.css' ]
 })
 export class ContentComponent implements OnInit {
 	employeeCount: Number = 0;
@@ -22,7 +22,7 @@ export class ContentComponent implements OnInit {
 	role: string = '';
 	displayName: string = '';
 
-	constructor(private auth: AuthService, private db: DatabaseService) { }
+	constructor(private auth: AuthService, private db: DatabaseService) {}
 
 	ngOnInit(): void {
 		let companyId: string;
@@ -51,7 +51,13 @@ export class ContentComponent implements OnInit {
 				});
 				this.db.getCompanyDocs(companyId).then((documents) => {
 					documents.subscribe((documentsInstance) => {
-						this.documentCount = documentsInstance.length;
+						let companyLength = 0;
+						for (const document of documentsInstance) {
+							if (document.companyId == companyId) {
+								companyLength++;
+							}
+						}
+						this.documentCount = companyLength;
 					});
 				});
 			} else if (user.employee) {
