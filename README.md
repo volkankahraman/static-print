@@ -4,6 +4,7 @@
 
 # Static Print
 
+![gif](./ss/static.gif)
 **Proje İçerik:**
 
 Bazı belgelerin çıktısı olması ve fiziksel olarak saklanmaktadır. Günümüz şartlarında çalışanların uzaktan çalıştığı, dolayısıyla bu belgelerin çıktılarını fiziksel olarak bulunduramadıkları için uzaktan doküman çıktısına ihtiyaçları olacaktır.
