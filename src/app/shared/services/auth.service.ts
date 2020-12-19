@@ -94,4 +94,15 @@ export class AuthService {
 		await this.auth.signOut();
 		this.router.navigate([ '/auth', 'login' ]);
 	}
+	async sendPasswordResetEmail(	user: { email: string; }){
+		this.auth.sendPasswordResetEmail(user.email)
+		.then( resp =>  this.notify.success('Gönderildi!') )
+		.then( resp => this.router.navigate([ '/auth', 'login' ]))
+		.catch((error) => {
+			console.error(error.code);
+			if (error.code == 'auth/argument-error') this.notify.warning('Tüm Alanlar Doldurulmalıdır.');
+			else if (error.code == 'auth/invalid-email') this.notify.error('Geçerli Email Adresi Giriniz.');
+			else if (error.code == 'auth/user-not-found') this.notify.error('Girdiğiniz Kullanıcı Sistemde Bulunamadı veya Silinmiş Olabilir.');
+		});
+	}
 }
