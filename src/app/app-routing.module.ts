@@ -10,6 +10,7 @@ import { DocumentsComponent } from './dashboard/documents/documents.component';
 import { CompaniesComponent } from './dashboard/companies/companies.component';
 import { ContentComponent } from './dashboard/content/content.component';
 import { PrinterAccountComponent } from './dashboard/printer-account/printer-account.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
@@ -35,6 +36,12 @@ const routes: Routes = [
 			{
 				path: 'register',
 				component: RegisterComponent
+				// canActivate: [ AngularFireAuthGuard ]
+				// data: { authGuardPipe: redirectLoggedInToDashboard }
+			},
+			{
+				path: 'forgot-password',
+				component: ForgotPasswordComponent
 				// canActivate: [ AngularFireAuthGuard ]
 				// data: { authGuardPipe: redirectLoggedInToDashboard }
 			},

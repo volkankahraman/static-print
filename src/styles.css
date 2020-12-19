@@ -67,3 +67,6 @@ body{
 .section {
 	padding: 0 1.5rem;
 }
+.under-form-links{
+	display: grid;
+}

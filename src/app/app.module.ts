@@ -25,6 +25,7 @@ import { PrinterAccountComponent } from './dashboard/printer-account/printer-acc
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { EmployeeFilterPipe } from './dashboard/employees/employee-filter.pipe';
 import { DocumentFilterPipe } from './dashboard/documents/document-filter.pipe';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 @NgModule({
 	declarations: [
@@ -42,7 +43,8 @@ import { DocumentFilterPipe } from './dashboard/documents/document-filter.pipe';
 		EmployeesComponent,
 		PrinterAccountComponent,
 		EmployeeFilterPipe,
-		DocumentFilterPipe
+		DocumentFilterPipe,
+		ForgotPasswordComponent
 	],
 	imports: [
 		BrowserModule,
