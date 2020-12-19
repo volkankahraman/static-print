@@ -1,6 +1,5 @@
-import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { Injectable } from '@angular/core';
-import { async } from '@angular/core/testing';
+
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
@@ -181,6 +180,17 @@ export class DatabaseService {
 		let docs: Observable<any[]> = this.db.collection('documents').valueChanges({ idField: 'eventId' });
 
 		return docs;
+	}
+
+	async changeUserDisplayName(userId: string, updatedDisplayName: string) {
+		let doc = await this.db.collection('users').doc(userId).ref.update({
+			displayName: updatedDisplayName
+		});
+		return doc;
+	}
+
+	async removeUser(userId: string) {
+		return this.db.collection('users').doc(userId).delete();
 	}
 
 	async getUserFromId(userId) {
