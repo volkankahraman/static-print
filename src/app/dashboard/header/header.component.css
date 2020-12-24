@@ -8,7 +8,6 @@ nav.navbar {
 }
 
 .navbar-item, .navbar-link {
-    font-size: 14px;
     font-weight: 700;
 }
 .addEmployee {
@@ -37,4 +36,7 @@ nav.navbar {
 
 .addDocument:focus {
     background-color: #41b96b !important;
+}
+.button{
+    min-width: 0 !important;
 }

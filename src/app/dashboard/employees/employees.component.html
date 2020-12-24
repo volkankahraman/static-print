@@ -8,14 +8,24 @@
   <thead>
     <tr>
       <th>No</th>
-      <th>Ad Soyad  <input class="form-control" style="float: right;"  placeholder="Personel Ara" [(ngModel)]="filterText"/></th>
+      <th>Ad Soyad</th>
+      <th><input class="form-control" style="float: right;" placeholder="Personel Ara" [(ngModel)]="filterText" /></th>
     </tr>
-   
   </thead>
   <tbody>
     <tr *ngFor="let employee of employees | employeeFilter:filterText; let i = index">
       <th>{{ i + 1 }}</th>
       <td>{{ employee.displayName }}</td>
+      <td>
+        <div class="buttons is-right">
+          <button class="button is-danger is-outlined is-small m-0">
+            <span>Delete</span>
+            <span class="icon is-small">
+              <i class="fas fa-times"></i>
+            </span>
+          </button>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>

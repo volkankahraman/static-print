@@ -10,7 +10,7 @@ import { Upload } from 'src/app/shared/models/upload';
 @Component({
 	selector: 'app-modal',
 	templateUrl: './modal.component.html',
-	styleUrls: [ './modal.component.css' ]
+	styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit {
 	@Input() state: boolean = false;
@@ -25,7 +25,7 @@ export class ModalComponent implements OnInit {
 		private valid: ValidationService,
 		private db: DatabaseService,
 		private fb: FormBuilder
-	) {}
+	) { }
 
 	mailAddress: string;
 	mailName: string;
@@ -137,4 +137,12 @@ export class ModalComponent implements OnInit {
 				});
 		}
 	}
+
+	editAccount = this.fb.group({
+		fullName: [],
+		email: [],
+		password: []
+	});
+
+	updateAccount() { }
 }
