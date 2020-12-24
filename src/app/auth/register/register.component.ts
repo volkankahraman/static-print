@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
 	selector: 'app-register',
@@ -10,11 +11,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class RegisterComponent implements OnInit {
+	score: number = 0
 	constructor(
 		private auth: AuthService,
 		private fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
-		private router: Router
+		private router: Router,
+		private notify: NotificationService
 	) { }
 
 	registerForm = this.fb.group({
@@ -45,12 +48,18 @@ export class RegisterComponent implements OnInit {
 		}
 	}
 
-	async register() {
-		if (this.companyId != undefined)
-			await this.auth.registerAccount(this.registerForm.getRawValue(), this.companyId);
-		else
-			await this.auth.registerAccount(this.registerForm.getRawValue());
+	onStrengthChange(strength) {
+		this.score = strength
+	}
 
+	async register() {
+		if (this.score >= 50) {
+			if (this.companyId != undefined)
+				await this.auth.registerAccount(this.registerForm.getRawValue(), this.companyId);
+			else
+				await this.auth.registerAccount(this.registerForm.getRawValue());
+		} else { this.notify.warning("Şifrenizin en az uygun seviyesinde olması lazım.") }
+		
 		let isUser: boolean;
 		this.auth.currUser.subscribe((authState) => {
 			isUser = !!authState;

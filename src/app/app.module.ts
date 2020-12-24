@@ -26,6 +26,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { EmployeeFilterPipe } from './dashboard/employees/employee-filter.pipe';
 import { DocumentFilterPipe } from './dashboard/documents/document-filter.pipe';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
+import { PasswordStrengthMeterComponent } from './password-strength-meter/password-strength-meter.component';
 
 @NgModule({
 	declarations: [
@@ -44,7 +46,8 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 		PrinterAccountComponent,
 		EmployeeFilterPipe,
 		DocumentFilterPipe,
-		ForgotPasswordComponent
+		ForgotPasswordComponent,
+		PasswordStrengthMeterComponent
 	],
 	imports: [
 		BrowserModule,
@@ -54,7 +57,8 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 		AngularFireStorageModule,
 		FormsModule,
 		ReactiveFormsModule,
-		NgxDropzoneModule
+		NgxDropzoneModule,
+		PasswordStrengthMeterModule
 	],
 	providers: [ AuthService ],
 	bootstrap: [ AppComponent ]
