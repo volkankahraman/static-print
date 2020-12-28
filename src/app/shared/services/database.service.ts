@@ -17,7 +17,7 @@ import { StorageService } from './storage.service';
 	providedIn: 'root'
 })
 export class DatabaseService {
-	constructor(public db: AngularFirestore, public cf: AngularFireFunctions, private st: StorageService) {}
+	constructor(public db: AngularFirestore, public cf: AngularFireFunctions, private st: StorageService) { }
 
 	async addManager(user: firebase.User, fullName: string, companyName: string) {
 		let newManager: Manager = new Manager(user.uid, user.email, user.email.split('@')[0], fullName);
@@ -160,7 +160,7 @@ export class DatabaseService {
 
 		for (const employee of employees) {
 			if (employee.data().company == companyId && employee.id != managerId) {
-				employeeList.push({ ...employee.data(), userType: (await employee.data().role.get()).data().type });
+				employeeList.push({ ...employee.data(), eID: employee.id, userType: (await employee.data().role.get()).data().type });
 			}
 		}
 

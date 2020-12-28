@@ -18,8 +18,9 @@
       <td>{{ employee.displayName }}</td>
       <td>
         <div class="buttons is-right">
-          <button class="button is-danger is-outlined is-small m-0">
-            <span>Delete</span>
+          <button [(ngModel)]="employee.eID" class="button is-danger is-outlined is-small m-0"
+            (click)="removeEmployee(employee.eID)">
+            <span>Çıkar</span>
             <span class="icon is-small">
               <i class="fas fa-times"></i>
             </span>

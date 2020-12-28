@@ -29,4 +29,14 @@ export class NotificationService {
 			confirmButtonText: "Tamam"
 		});
 	}
+
+	confirm(text:string){
+		return Swal.fire({
+			title: text,
+			showDenyButton: true,
+			showCancelButton: false,
+			confirmButtonText: "Tamam",
+			denyButtonText: "İptal",
+		})
+	}
 }

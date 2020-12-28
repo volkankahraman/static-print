@@ -17,6 +17,7 @@ import { async } from '@angular/core/testing';
 })
 export class AuthService {
 	currUser = new Subject<User>();
+	currUserID: string;
 
 	getUser(): Observable<firebase.User> {
 		return this.auth.authState;
@@ -33,7 +34,7 @@ export class AuthService {
 	async getCurrentUser() {
 		let authUser = await this.auth.currentUser;
 		let userClaims = await authUser.getIdTokenResult();
-
+		this.currUserID = authUser.uid;
 		return this.db.getUserData(authUser.uid, userClaims.claims.admin || false);
 	}
 

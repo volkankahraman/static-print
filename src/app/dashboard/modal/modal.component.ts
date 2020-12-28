@@ -33,11 +33,16 @@ export class ModalComponent implements OnInit {
 	cid: string;
 	cName: string;
 
+	ID: string;
+
 	ngOnInit(): void {
 		this.auth.getCurrentUser().then((user) => {
 			if (user.manager) {
 				this.cid = user.manager.company.uid;
 				this.cName = user.manager.company.name;
+				this.ID = user.manager.uid
+			} else if (user.employee) {
+				this.ID = user.employee.uid
 			}
 		});
 	}
@@ -139,10 +144,18 @@ export class ModalComponent implements OnInit {
 	}
 
 	editAccount = this.fb.group({
-		fullName: [],
-		email: [],
-		password: []
+		fullName: []
 	});
 
-	updateAccount() { }
+	updateAccount() {
+		this.db
+			.changeUserDisplayName(this.ID, this.editAccount.value.fullName)
+			.then((user) => {
+				console.log(user);
+				this.notify.success('Kullanıcı Adı Değiştirildi.');
+				this.onClose.emit(!this.state);
+				location.reload();
+			})
+			.catch((err) => console.log('Kullanıcı bulunamadı'));
+	}
 }
