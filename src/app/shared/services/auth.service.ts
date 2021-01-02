@@ -52,6 +52,11 @@ export class AuthService {
 				else if (error.code == 'auth/invalid-email') this.notify.error('Geçerli Email Adresi Giriniz.');
 				else if (error.code == 'auth/user-not-found') this.notify.error('Kullanıcı Bulunmadı');
 				else if (error.code == 'auth/wrong-password') this.notify.error('Hatalı Şifre');
+				else if (error.code == 'auth/too-many-requests'){
+					this.notify.error('Çok Sayıda Yanlış Şifre Denemesi Yaptınız Şifrenizi Sıfırlayın Yada Daha Sonra Tekrar Deneyin ');
+					this.router.navigate([ '/auth', 'forgot-password' ]);
+				} 
+				
 			});
 	}
 
