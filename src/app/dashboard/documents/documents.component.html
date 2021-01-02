@@ -24,12 +24,14 @@
   </tbody>
 </table> -->
 
-<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth row-border hover">
+<table datatable [dtOptions]="dtOptions" id="datatable" [dtTrigger]="dtTrigger"
+  class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth row-border hover">
   <thead>
     <tr>
       <th>No</th>
       <th>Belge Adı</th>
       <th>Belgeyi Yükleyen</th>
+      <th>Yükleme tarihi</th>
     </tr>
   </thead>
   <tbody>
@@ -37,6 +39,7 @@
       <td>{{ i + 1 }}</td>
       <td><a href='{{ document.downloadUrl }}' target="_blank">{{ document.name }}</a></td>
       <td>{{ document.user.displayName }}</td>
+      <td>{{ document.createdAt }}</td>
     </tr>
   </tbody>
 </table>

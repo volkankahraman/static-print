@@ -8,7 +8,7 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 @Component({
 	selector: 'app-documents',
 	templateUrl: './documents.component.html',
-	styleUrls: ['./documents.component.css']
+	styleUrls: [ './documents.component.css' ]
 })
 export class DocumentsComponent implements OnDestroy, OnInit {
 	dtOptions: DataTables.Settings = {};
@@ -19,15 +19,16 @@ export class DocumentsComponent implements OnDestroy, OnInit {
 
 	showNavigation: boolean = true;
 
-	constructor(private auth: AuthService, private db: DatabaseService, private router: Router) { }
+	constructor(private auth: AuthService, private db: DatabaseService, private router: Router) {}
 	@Input() isPrinted: boolean;
 
 	ngOnInit(): void {
 		this.dtOptions = {
 			pagingType: 'full_numbers',
-			pageLength: 5,
-			language:{
-				url:'//cdn.datatables.net/plug-ins/1.10.22/i18n/Turkish.json'
+			destroy: true,
+			pageLength: 10,
+			language: {
+				url: '//cdn.datatables.net/plug-ins/1.10.22/i18n/Turkish.json'
 			}
 		};
 		this.auth.getCurrentUser().then((user) => {
@@ -40,6 +41,7 @@ export class DocumentsComponent implements OnDestroy, OnInit {
 						for (const doc of documentsInstance) {
 							if (doc.companyId == companyId) {
 								let docUser = await this.db.getUserFromId(doc.userId);
+								doc.createdAt = new Date(doc.createdAt.toDate()).toLocaleString();
 
 								companyDocList.push({
 									...doc,
@@ -48,7 +50,7 @@ export class DocumentsComponent implements OnDestroy, OnInit {
 							}
 						}
 						this.documents = companyDocList;
-						this.dtTrigger.next();
+						this.resetDataTable();
 					});
 				});
 			} else if (user.employee) {
@@ -56,6 +58,7 @@ export class DocumentsComponent implements OnDestroy, OnInit {
 
 				this.db.getUserDocs(userId).then((documents) => {
 					this.documents = documents;
+					this.resetDataTable();
 				});
 			} else if (user.pMaster) {
 				let companyId: string = user.pMaster.company.uid;
@@ -84,7 +87,7 @@ export class DocumentsComponent implements OnDestroy, OnInit {
 										printJS(doc.downloadUrl);
 
 										setTimeout(() => {
-											this.db.setPrinted(doc.eventId).then((_) => { });
+											this.db.setPrinted(doc.eventId).then((_) => {});
 										}, 5000);
 									}
 								}
@@ -92,10 +95,17 @@ export class DocumentsComponent implements OnDestroy, OnInit {
 						}
 
 						this.documents = companyDocList;
+						this.resetDataTable();
 					});
 				});
-			} else this.router.navigate(['/dashboard']);
+			} else this.router.navigate([ '/dashboard' ]);
 		});
+	}
+
+	resetDataTable(): void {
+		$('#datatable').DataTable().destroy();
+
+		this.dtTrigger.next();
 	}
 
 	ngOnDestroy(): void {
