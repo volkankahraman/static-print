@@ -6,13 +6,13 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 @Component({
 	selector: 'app-printer-account',
 	templateUrl: './printer-account.component.html',
-	styleUrls: [ './printer-account.component.css' ]
+	styleUrls: ['./printer-account.component.css']
 })
 export class PrinterAccountComponent implements OnInit {
 	printerAccount;
 	showModal: boolean = false;
 
-	constructor(private auth: AuthService, private db: DatabaseService, private notify: NotificationService) {}
+	constructor(private auth: AuthService, private db: DatabaseService, private notify: NotificationService) { }
 
 	addPrintAccount() {
 		this.showModal = true;
@@ -41,5 +41,19 @@ export class PrinterAccountComponent implements OnInit {
 				});
 			}
 		});
+	}
+	removePrinterAccount(paID) {
+		this.notify.confirm("Yazıcıyı silmek istiyor musunuz?").then((result) => {
+			if (result.isConfirmed) {
+				this.notify.success("Yazıcı Silindi")
+				this.db
+					.removeUser(paID)
+					.then((user) => {
+						console.log(user)
+						location.reload()
+					})
+					.catch((err) => console.log('Yazıcı Bulunamadı'));
+			}
+		})
 	}
 }

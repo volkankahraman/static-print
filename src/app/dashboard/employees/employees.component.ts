@@ -45,7 +45,7 @@ export class EmployeesComponent implements OnInit {
             console.log(user)
             location.reload()
           })
-          .catch((err) => console.log('Kullanıcı bulunamadı'));
+          .catch((err) => console.log('Çalışan Bulunamadı'));
       }
     })
   }

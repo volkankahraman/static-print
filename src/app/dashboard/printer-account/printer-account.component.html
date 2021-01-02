@@ -19,15 +19,19 @@
           <p class="title is-4 mt-0">{{ printerAccount.displayName }}</p>
           <p class="subtitle is-6">{{ printerAccount.email }}</p>
         </div>
+        <div class="media-right">
+          <button class="button is-danger is-outlined is-small m-0"
+            (click)="removePrinterAccount(printerAccount.eID)">
+            <span>Çıkar</span>
+            <span class="icon is-small">
+              <i class="fas fa-times"></i>
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </ng-template>
 
-<app-modal
-  *ngIf="showModal"
-  [showModal]="state"
-  [header]="'Yazıcı Hesabı Bilgileri'"
-  [form]="2"
-  (onClose)="addedPrinterAccount($event)"
-></app-modal>
+<app-modal *ngIf="showModal" [showModal]="state" [header]="'Yazıcı Hesabı Bilgileri'" [form]="2"
+  (onClose)="addedPrinterAccount($event)"></app-modal>
