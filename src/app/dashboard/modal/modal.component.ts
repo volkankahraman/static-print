@@ -120,7 +120,10 @@ export class ModalComponent implements OnInit {
 	});
 
 	onSelect(event) {
-		this.files.push(...event.addedFiles);
+		if (event.addedFiles[0].size <= 1048576)
+			this.files.push(...event.addedFiles);
+		else
+			this.notify.warning("Dosya Boyutu 1 MB'den Büyük Olamaz")	
 	}
 
 	onRemove(event) {
@@ -129,7 +132,9 @@ export class ModalComponent implements OnInit {
 
 	async uploadFile(file: File[]) {
 		let user = await this.auth.getCurrentUser();
-		if (file.length > 0) {
+		console.log(file);
+
+		if (file.length == 1) {
 			let upload: Upload = new Upload(file[0]);
 			this.db
 				.addDocument(upload, user)
@@ -140,7 +145,7 @@ export class ModalComponent implements OnInit {
 				.catch((e) => {
 					this.notify.error('Belge Yüklenemedi.');
 				});
-		}
+		} else { this.notify.warning("Lütfen 1 Adet Dosya Yükleyin.") }
 	}
 
 	editAccount = this.fb.group({
