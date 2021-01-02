@@ -6,7 +6,7 @@
     </ul>
   </nav>
 </ng-template>
-<table class="table is-fullwidth is-hoverable is-striped">
+<!-- <table class="table is-fullwidth is-hoverable is-striped">
   <thead>
     <tr>
       <th>No</th>
@@ -22,5 +22,21 @@
       <td>{{ document.user.displayName }}</td>
     </tr>
   </tbody>
+</table> -->
 
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth row-border hover">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Belge Adı</th>
+      <th>Belgeyi Yükleyen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let document of documents | documentFilter:filterText; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td><a href='{{ document.downloadUrl }}' target="_blank">{{ document.name }}</a></td>
+      <td>{{ document.user.displayName }}</td>
+    </tr>
+  </tbody>
 </table>

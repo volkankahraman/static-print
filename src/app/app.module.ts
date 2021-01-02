@@ -28,6 +28,7 @@ import { DocumentFilterPipe } from './dashboard/documents/document-filter.pipe';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { PasswordStrengthMeterComponent } from './password-strength-meter/password-strength-meter.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
 	declarations: [
@@ -58,7 +59,8 @@ import { PasswordStrengthMeterComponent } from './password-strength-meter/passwo
 		FormsModule,
 		ReactiveFormsModule,
 		NgxDropzoneModule,
-		PasswordStrengthMeterModule
+		PasswordStrengthMeterModule,
+		 DataTablesModule
 	],
 	providers: [ AuthService ],
 	bootstrap: [ AppComponent ]
